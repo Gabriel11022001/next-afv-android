@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">next-vendas</string>
+    <string name="txt_btn_realizar_login">Realizar login</string>
+    <string name="txt_btn_registrarse">Registrar-se</string>
+    <string name="txt_label_email">E-mail</string>
+    <string name="txt_hint_email_usuario">Digite seu e-mail...</string>
+    <string name="txt_label_senha">Senha</string>
+    <string name="txt_hint_senha_usuario">Digite sua senha...</string>
+    <string name="txt_btn_entrar">Entrar</string>
+    <string name="txt_sinc_configuracoes">Configurações</string>
+    <string name="txt_btn_sincronizar">Sincronizar</string>
+    <string name="txt_status_sincronizacao">Sincronizando...</string>
+    <string name="txt_sinc_clientes">Clientes</string>
+    <string name="txt_sinc_produtos">Produtos</string>
+    <string name="txt_sinc_lista_preco">Listas de preço</string>
+    <string name="txt_sinc_vendas">Vendas</string>
+    <string name="txt_clientes_card_home">Clientes</string>
+    <string name="txt_produtos_card_home">Produtos</string>
+    <string name="txt_card_gestao_clientes">Gestão de clientes</string>
+    <string name="txt_card_gestao_produtos">Gestão de produtos</string>
+</resources>

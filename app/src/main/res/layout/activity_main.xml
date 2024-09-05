@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fundo_gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="20dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_realizar_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_logo"
+        android:layout_margin="20dp"
+        android:background="@drawable/estilo_btn_borda_branca_fundo_transparente"
+        android:text="@string/txt_btn_realizar_login"
+        android:textColor="@color/white"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:elevation="4dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_registrarse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_realizar_login"
+        android:layout_margin="20dp"
+        android:background="@drawable/estilo_btn_padrao"
+        android:text="@string/txt_btn_registrarse"
+        android:textColor="@color/white"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:elevation="4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

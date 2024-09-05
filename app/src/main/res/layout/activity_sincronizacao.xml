@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SincronizacaoActivity" >
+
+    <include android:id="@+id/menu_topo_sinc" layout="@layout/menu_topo" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_sinc_configuracoes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/menu_topo_sinc"
+        app:layout_constraintEnd_toEndOf="@id/menu_topo_sinc"
+        app:layout_constraintTop_toBottomOf="@id/menu_topo_sinc"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sinc_configuracoes"
+            android:textColor="@color/principal"
+            android:textAllCaps="true"
+            android:textSize="16dp"
+            android:textStyle="italic"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_status_sinc_configuracoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_sinc_configuracoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_separador_linhas"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_configuracoes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_sinc_clientes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_configuracoes"
+        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_configuracoes"
+        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_configuracoes"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sinc_clientes"
+            android:textColor="@color/principal"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_status_sinc_clientes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_sinc_clientes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_separador_linhas"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_clientes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_sinc_produtos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_clientes"
+        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_clientes"
+        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_clientes"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sinc_produtos"
+            android:textColor="@color/principal"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_status_sinc_produtos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_sinc_produtos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_separador_linhas"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_produtos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_sinc_listas_preco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_produtos"
+        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_produtos"
+        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_produtos"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sinc_lista_preco"
+            android:textColor="@color/principal"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_status_sinc_lista_preco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_sinc_lista_preco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_separador_linhas"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_listas_preco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_sinc_vendas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_listas_preco"
+        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_listas_preco"
+        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_listas_preco"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sinc_vendas"
+            android:textColor="@color/principal"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_status_sinc_vendas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkbox_sinc_vendas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cinza_separador_linhas"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_vendas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:id="@+id/linear_container_loader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_sincronizar"
+        android:padding="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/cinza_fundo_telas"
+        android:elevation="4dp" >
+
+        <TextView
+            android:id="@+id/txt_progresso_sincronizacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_status_sincronizacao"
+            android:textColor="@color/principal"
+            android:textStyle="bold" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="0"
+            android:layout_marginTop="10dp" />
+        
+    </LinearLayout>
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_sincronizar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_btn_sincronizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/estilo_btn_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textAllCaps="true"
+        android:textSize="18sp" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
