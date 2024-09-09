@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_lb_cep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_cep"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- cep do cliente -->
+    <EditText
+        android:id="@+id/edt_cep_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_cep_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/txt_lb_endereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_endereco"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- endereço do cliente -->
+    <EditText
+        android:id="@+id/edt_endereco_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_endereco_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>

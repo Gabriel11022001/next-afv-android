@@ -18,4 +18,21 @@
     <string name="txt_produtos_card_home">Produtos</string>
     <string name="txt_card_gestao_clientes">Gestão de clientes</string>
     <string name="txt_card_gestao_produtos">Gestão de produtos</string>
+    <string name="txt_hint_pesquisar_clientes">Digite o nome, razão social ou e-mail...</string>
+    <string name="txt_radio_pf">Pessoa física</string>
+    <string name="txt_radio_pj">Pessoa juridica</string>
+    <string name="txt_lb_email">Email*</string>
+    <string name="txt_hint_campo_email_cliente">Digite o e-mail do cliente...</string>
+    <string name="txt_lb_telefone_celular">Telefone celular*</string>
+    <string name="txt_hint_campo_telefone_celular_cliente">ex: (00) 00000-0000</string>
+    <string name="txt_lb_telefone_fixo">Telefone fixo</string>
+    <string name="txt_hint_campo_telefone_fixo_cliente">ex: (00) 0000-0000</string>
+    <string name="txt_lb_telefone_complementar">Telefone complementar</string>
+    <string name="txt_cadastro_completo">Cadastro completo</string>
+    <string name="txt_cadastro_endereco_cliente">Endereço</string>
+    <string name="txt_lb_cep">CEP*</string>
+    <string name="txt_hint_campo_cep_cliente">Digite o cep...</string>
+    <string name="txt_lb_endereco">Endereço*</string>
+    <string name="txt_hint_campo_endereco_cliente">Digite o endereço...</string>
+    <string name="txt_btn_salvar_cliente">Salvar</string>
 </resources>
