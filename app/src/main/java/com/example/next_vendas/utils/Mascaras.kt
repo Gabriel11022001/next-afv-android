@@ -9,6 +9,7 @@ class Mascaras {
         val CPF: String = "###.###.###-##"
         val CNPJ: String = ""
         val CEP: String = "#####-###"
+        val DATA_NASCIMENTO: String = "##/##/####"
 
     }
 

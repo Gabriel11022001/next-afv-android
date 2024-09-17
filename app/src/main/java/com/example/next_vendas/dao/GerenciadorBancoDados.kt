@@ -15,15 +15,42 @@ open class GerenciadorBancoDados(contexto: Context): SQLiteOpenHelper(
     protected val bancoDados: SQLiteDatabase = writableDatabase
 
     override fun onCreate(p0: SQLiteDatabase?) {
-        this.gerarTabelas()
+        this.gerarTabelas(p0!!)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
 
     }
 
-    private fun gerarTabelas() {
-
+    private fun gerarTabelas(bancoDados: SQLiteDatabase) {
+        // criar tabela de clientes
+        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_clientes(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "tipo_pessoa TEXT NOT NULL," +
+                "nome_completo TEXT," +
+                "cpf TEXT," +
+                "data_nascimento TEXT," +
+                "telefone_celular TEXT," +
+                "telefone_fixo TEXT," +
+                "telefone_complementar TEXT," +
+                "email TEXT," +
+                "data_cadastro TEXT," +
+                "sexo TEXT," +
+                "cnpj TEXT," +
+                "inscricao_estadual TEXT," +
+                "site TEXT)")
+        // criar tabela de endereços dos clientes
+        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_enderecos_clientes(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "cep TEXT," +
+                "endereco TEXT," +
+                "complemento TEXT," +
+                "cidade TEXT," +
+                "bairro TEXT," +
+                "estado TEXT," +
+                "numero TEXT," +
+                "cliente_id INT," +
+                "FOREIGN KEY(cliente_id) REFERENCES tb_clientes(id))")
     }
 
 }

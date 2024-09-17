@@ -1,5 +1,6 @@
 package com.example.next_vendas.utils
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,29 +9,33 @@ import android.widget.TextView
 import com.example.next_vendas.R
 
 class Loader(
-    private val contexto: Context,
-    private val container: ViewGroup
+    private val contexto: Context
 ) {
 
-    private val viewAlerta: View
     private var txtMensagem: TextView
+    private var builderLoader: AlertDialog.Builder
+    private var alertaLoader: AlertDialog
 
     init {
-        val layoutInflater: LayoutInflater = LayoutInflater.from(this.contexto)
-        this.viewAlerta = layoutInflater.inflate(R.layout.loader_padrao, container, false)
-        this.txtMensagem = viewAlerta.findViewById(R.id.txt_msg_loader)
-        this.viewAlerta.visibility = View.GONE
+        val viewLoader = LayoutInflater.from(this.contexto).inflate(R.layout.loader, null)
 
-        this.container.addView(viewAlerta)
+        this.txtMensagem = viewLoader.findViewById(R.id.txt_mensagem_loader)
+
+        this.builderLoader = AlertDialog.Builder(this.contexto)
+        this.builderLoader.setCancelable(false)
+        this.builderLoader.setView(viewLoader)
+
+        this.alertaLoader = this.builderLoader.create()
     }
 
     fun iniciarLoader(mensagem: String) {
         this.txtMensagem.text = mensagem
-        this.viewAlerta.visibility = View.VISIBLE
+        this.alertaLoader.show()
     }
 
     fun finalizarLoader() {
-        this.viewAlerta.visibility = View.GONE
+        this.txtMensagem.text = ""
+        this.alertaLoader.dismiss()
     }
 
 }

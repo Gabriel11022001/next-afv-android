@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.next_vendas.dao.GerenciadorBancoDados
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -26,6 +27,9 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         this.btnRealizarLogin = findViewById(R.id.btn_entrar)
 
         this.btnRealizarLogin.setOnClickListener(this)
+
+        // criar base de dados
+        GerenciadorBancoDados(this)
     }
 
     private fun login() {

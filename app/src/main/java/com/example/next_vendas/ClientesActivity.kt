@@ -2,6 +2,7 @@ package com.example.next_vendas
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.EditText
@@ -12,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.next_vendas.adapter.ClienteAdapter
 import com.example.next_vendas.dao.ClienteDAO
+import com.example.next_vendas.listener.IOnConfirmarListener
 import com.example.next_vendas.model.Pessoa
-import com.example.next_vendas.model.PessoaFisica
+import com.example.next_vendas.utils.AlertaConfirmarVoltar
 import java.util.ArrayList
 
 class ClientesActivity : AppCompatActivity(), OnClickListener {
@@ -28,6 +30,7 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
     private lateinit var clienteAdapter: ClienteAdapter
     private lateinit var clienteDAO: ClienteDAO
     private var clientes: ArrayList<Pessoa> = arrayListOf()
+    private lateinit var alertaConfirmarVoltar: AlertaConfirmarVoltar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,17 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
         this.edtPesquisarClientes.requestFocus()
         this.txtTitulo.text = "Clientes"
         this.btnFiltro.visibility = View.GONE
+
+        // configurar evento de voltar
+        val iOnConfirmarVoltarListener = object : IOnConfirmarListener {
+
+            override fun confirmar() {
+                finish()
+            }
+
+        }
+
+        this.alertaConfirmarVoltar = AlertaConfirmarVoltar(this, "Deseja mesmo retornar?", iOnConfirmarVoltarListener)
     }
 
     override fun onStart() {
@@ -68,18 +82,16 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
     private fun listarClientes() {
 
         try {
-            val primeiroCliente = PessoaFisica()
-            primeiroCliente.id = 1
-            primeiroCliente.nome = "Gabriel Rodrigues dos Santos"
-            primeiroCliente.cpf = "123.456.789-00"
+            this.clientes = this.clienteDAO.listarClientes()
 
-            for (i in 1..100) {
-                this.clientes.add(primeiroCliente)
+            if (clientes.size > 0) {
+                this.clienteAdapter.setClientes(clientes)
+            } else {
+
             }
 
-            this.clienteAdapter.setClientes(this.clientes)
         } catch (e: Exception) {
-
+            Log.e("erro_listar_clientes", e.message.toString())
         }
 
     }
@@ -95,7 +107,7 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun voltar() {
-
+        this.alertaConfirmarVoltar.apresentar()
     }
 
     private fun redirecionar(tela: String) {

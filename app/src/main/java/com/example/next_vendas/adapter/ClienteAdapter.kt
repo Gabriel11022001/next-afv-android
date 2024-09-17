@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.next_vendas.R
 import com.example.next_vendas.model.Pessoa
-import com.example.next_vendas.model.PessoaFisica
-import com.example.next_vendas.model.PessoaJuridica
 import com.example.next_vendas.utils.Constantes
 import com.example.next_vendas.view_holder.ClienteViewHolder
 import java.util.ArrayList
@@ -32,19 +30,15 @@ class ClienteAdapter(
 
     override fun onBindViewHolder(clienteViewHolder: ClienteViewHolder, position: Int) {
         val cliente: Pessoa = this.clientes[ position ]
-        var clientePessoaFisica: PessoaFisica? = null
-        var clientePessoaJuridica: PessoaJuridica? = null
 
         if (cliente.tipoPessoa == Constantes.FISICA) {
             // o cliente é uma pf, apresentar o cpf e o nome
-            clientePessoaFisica = cliente as PessoaFisica
-            clienteViewHolder.txtClienteDocumento.text = clientePessoaFisica.cpf.uppercase()
-            clienteViewHolder.txtClienteNome.text = clientePessoaFisica.nome
+            clienteViewHolder.txtClienteDocumento.text = cliente.cpf.uppercase()
+            clienteViewHolder.txtClienteNome.text = cliente.nome
         } else {
             // o cliente é uma pj, apresentar o cnpj e a razão social
-            clientePessoaJuridica = cliente as PessoaJuridica
-            clienteViewHolder.txtClienteDocumento.text = clientePessoaJuridica.cnpj.uppercase()
-            clienteViewHolder.txtClienteNome.text = clientePessoaJuridica.razaoSocial
+            clienteViewHolder.txtClienteDocumento.text = cliente.cnpj.uppercase()
+            clienteViewHolder.txtClienteNome.text = cliente.razaoSocial
         }
 
     }
