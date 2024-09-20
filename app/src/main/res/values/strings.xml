@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">next-vendas</string>
+    <string name="app_name">Next AFV</string>
     <string name="txt_btn_realizar_login">Realizar login</string>
     <string name="txt_btn_registrarse">Registrar-se</string>
     <string name="txt_label_email">E-mail</string>
@@ -18,4 +18,37 @@
     <string name="txt_produtos_card_home">Produtos</string>
     <string name="txt_card_gestao_clientes">Gestão de clientes</string>
     <string name="txt_card_gestao_produtos">Gestão de produtos</string>
+    <string name="txt_hint_pesquisar_clientes">Digite o nome, razão social ou e-mail...</string>
+    <string name="txt_radio_pf">Pessoa física</string>
+    <string name="txt_radio_pj">Pessoa juridica</string>
+    <string name="txt_lb_email">Email*</string>
+    <string name="txt_hint_campo_email_cliente">Digite o e-mail do cliente...</string>
+    <string name="txt_lb_telefone_celular">Telefone celular*</string>
+    <string name="txt_hint_campo_telefone_celular_cliente">ex: (00) 00000-0000</string>
+    <string name="txt_lb_telefone_fixo">Telefone fixo</string>
+    <string name="txt_hint_campo_telefone_fixo_cliente">ex: (00) 0000-0000</string>
+    <string name="txt_lb_telefone_complementar">Telefone complementar</string>
+    <string name="txt_cadastro_completo">Cadastro completo</string>
+    <string name="txt_cadastro_endereco_cliente">Endereço</string>
+    <string name="txt_lb_cep">CEP*</string>
+    <string name="txt_hint_campo_cep_cliente">Digite o cep...</string>
+    <string name="txt_lb_endereco">Endereço*</string>
+    <string name="txt_hint_campo_endereco_cliente">Digite o endereço...</string>
+    <string name="txt_btn_salvar_cliente">Salvar</string>
+    <string name="txt_lb_complemento">Complemento</string>
+    <string name="txt_hint_campo_complemento_cliente">Digite o complemento...</string>
+    <string name="txt_lb_bairro">Bairro*</string>
+    <string name="txt_hint_campo_bairro_cliente">Digite o bairro...</string>
+    <string name="txt_lb_cidade">Cidade*</string>
+    <string name="txt_hint_campo_cidade_cliente">Digite a cidade...</string>
+    <string name="txt_lb_estado">Estado*</string>
+    <string name="txt_lb_numero">Número</string>
+    <string name="txt_hint_campo_numero_cliente">s/n</string>
+    <string name="txt_lb_nome_completo">Nome completo*</string>
+    <string name="txt_hint_campo_nome_completo_cliente">Digite o nome completo...</string>
+    <string name="txt_lb_cpf">CPF*</string>
+    <string name="txt_hint_campo_cpf_cliente">ex: 000.000.000-00</string>
+    <string name="txt_lb_data_nascimento">Data de nascimento*</string>
+    <string name="txt_hint_campo_data_nascimento_cliente">ex: 00/00/0000</string>
+    <string name="txt_lb_genero_cliente">Gênero*</string>
 </resources>
