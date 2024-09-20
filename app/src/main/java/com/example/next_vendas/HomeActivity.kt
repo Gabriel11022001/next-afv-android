@@ -1,5 +1,6 @@
 package com.example.next_vendas
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -71,10 +72,24 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         this.voltar()
     }
 
+    private fun redirecionar(tela: String) {
+
+        if (tela == "gestao_clientes") {
+            startActivity(Intent(this, ClientesActivity::class.java))
+        } else if (tela == "gestao_produtos") {
+            startActivity(Intent(this, ProdutosActivity::class.java))
+        }
+
+    }
+
     override fun onClick(p0: View?) {
 
         if (p0!!.id == R.id.btn_retornar) {
             this.voltar()
+        } else if (p0!!.id == R.id.constraint_card_gestao_clientes) {
+            this.redirecionar("gestao_clientes")
+        } else if (p0!!.id == R.id.constraint_card_gestao_produtos) {
+            this.redirecionar("gestao_produtos")
         }
 
     }

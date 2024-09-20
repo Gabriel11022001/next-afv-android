@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_lb_nome_completo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_nome_completo"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- nome completo do cliente pf -->
+    <EditText
+        android:id="@+id/edt_nome_completo_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_nome_completo_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_cpf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_cpf"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- cpf do cliente pf -->
+    <EditText
+        android:id="@+id/edt_cpf_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_cpf_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="number"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_data_nascimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_data_nascimento"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- data de nascimento do cliente pf -->
+    <EditText
+        android:id="@+id/edt_data_nascimento_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_data_nascimento_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="date"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_sexo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_genero_cliente"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- campo de gênero da pessoa fisica -->
+    <Spinner
+        android:id="@+id/spn_genero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp" />
+
+</LinearLayout>
