@@ -76,6 +76,8 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
 
         if (tela == "gestao_clientes") {
             startActivity(Intent(this, ClientesActivity::class.java))
+        } else if (tela == "gestao_produtos") {
+            startActivity(Intent(this, ProdutosActivity::class.java))
         }
 
     }
@@ -86,6 +88,8 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             this.voltar()
         } else if (p0!!.id == R.id.constraint_card_gestao_clientes) {
             this.redirecionar("gestao_clientes")
+        } else if (p0!!.id == R.id.constraint_card_gestao_produtos) {
+            this.redirecionar("gestao_produtos")
         }
 
     }

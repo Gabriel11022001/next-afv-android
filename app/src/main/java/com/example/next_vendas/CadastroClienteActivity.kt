@@ -331,21 +331,7 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
     // método onde envio o cliente para o servidor
     private fun enviarClienteServidor() {
-        ClienteApi.cadastrarCliente(this.cliente, object : IOnEnviarServidor {
 
-            override fun sucesso(mensagemSucesso: String) {
-                // esconder o loader
-                esconderLoader()
-                // apresentar alerta de sucesso para o usuário
-            }
-
-            override fun erro(mensagemErro: String) {
-                // esconder o loader
-                esconderLoader()
-                // apresentar alerta de erro para o usuário
-            }
-
-        })
     }
 
     private fun salvarCliente() {
