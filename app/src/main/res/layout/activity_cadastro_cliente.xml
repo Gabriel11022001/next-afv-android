@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastroClienteActivity"
+    android:background="@color/cinza_fundo_telas" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:orientation="vertical" >
+
+        <include layout="@layout/menu_topo" android:id="@+id/menu_topo_cadastro_cliente" />
+
+        <!-- FrameLayout que vai possuir o loader -->
+        <FrameLayout
+            android:id="@+id/container_possui_loader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        
+        <RadioGroup
+            android:id="@+id/radio_group_tipo_pessoa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <!-- cliente pessoa física -->
+            <RadioButton
+                android:id="@+id/rb_pessoa_fisica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_radio_pf"
+                android:textColor="@color/principal"
+                android:textStyle="bold|italic"
+                android:layout_marginEnd="20dp"
+                android:textAllCaps="true"
+                android:checked="true" />
+
+            <!-- cliente pessoa juridica -->
+            <RadioButton
+                android:id="@+id/rb_pessoa_juridica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_radio_pj"
+                android:textColor="@color/principal"
+                android:textStyle="bold|italic"
+                android:textAllCaps="true" />
+
+        </RadioGroup>
+
+        <!-- dados básicos para todos os clientes -->
+
+        <TextView
+            android:id="@+id/txt_lb_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_lb_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/principal"
+            android:textStyle="bold|italic"
+            android:textSize="18sp" />
+
+        <!-- e-mail do cliente -->
+        <EditText
+            android:id="@+id/edt_email_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/estilo_campo_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:hint="@string/txt_hint_campo_email_cliente"
+            android:textColor="@color/principal"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:elevation="4dp"
+            android:inputType="textEmailAddress"
+            android:padding="15dp" />
+
+        <TextView
+            android:id="@+id/txt_lb_telefone_celular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_lb_telefone_celular"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/principal"
+            android:textStyle="bold|italic"
+            android:textSize="18sp" />
+
+        <!-- telefone celular do cliente -->
+        <com.example.next_vendas.componentes.EditTextTelefone
+            android:id="@+id/edt_telefone_celular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/estilo_campo_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:hint="@string/txt_hint_campo_telefone_celular_cliente"
+            android:textColor="@color/principal"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:elevation="4dp"
+            android:inputType="phone"
+            android:padding="15dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:id="@+id/txt_lb_telefone_fixo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_lb_telefone_fixo"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/principal"
+            android:textStyle="bold|italic"
+            android:textSize="18sp" />
+
+        <!-- telefone fixo do cliente -->
+        <com.example.next_vendas.componentes.EditTextTelefone
+            android:id="@+id/edt_telefone_fixo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/estilo_campo_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:hint="@string/txt_hint_campo_telefone_fixo_cliente"
+            android:textColor="@color/principal"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:elevation="4dp"
+            android:inputType="phone"
+            android:padding="15dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:id="@+id/txt_lb_telefone_complementar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_lb_telefone_complementar"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/principal"
+            android:textStyle="bold|italic"
+            android:textSize="18sp" />
+
+        <!-- telefone complementar do cliente -->
+        <com.example.next_vendas.componentes.EditTextTelefone
+            android:id="@+id/edt_telefone_complementar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/estilo_campo_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:hint="@string/txt_hint_campo_telefone_celular_cliente"
+            android:textColor="@color/principal"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:elevation="4dp"
+            android:inputType="phone"
+            android:padding="15dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <LinearLayout
+            android:id="@+id/linear_container_cadastro_completo_cliente_topo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_cadastro_completo"
+                android:textColor="@color/principal"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ic_expadir_cadastro_completo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_seta_expandir"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_container_cadastro_completo_cliente_conteudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <!-- expandir endereço do cliente -->
+        <LinearLayout
+            android:id="@+id/linear_container_endereco_cliente_topo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_cadastro_endereco_cliente"
+                android:textColor="@color/principal"
+                android:textSize="18sp"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ic_expadir_endereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_seta_expandir"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_container_endereco_cliente_conteudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_salvar_cadastro_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/estilo_btn_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/txt_btn_salvar_cliente"
+            android:textColor="@color/white"
+            android:textAllCaps="true" />
+        
+    </LinearLayout>
+
+</ScrollView>
