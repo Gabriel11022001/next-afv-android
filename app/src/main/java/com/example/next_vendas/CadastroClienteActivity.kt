@@ -13,8 +13,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.example.next_vendas.api.ClienteApi
-import com.example.next_vendas.api.IOnEnviarServidor
 import com.example.next_vendas.componentes.EditTextTelefone
 import com.example.next_vendas.componentes.MascaraTextWhatcher
 import com.example.next_vendas.dao.ClienteDAO
@@ -25,7 +23,12 @@ import com.example.next_vendas.utils.Constantes
 import com.example.next_vendas.utils.GerenciaCampoObrigatorio
 import com.example.next_vendas.utils.Loader
 import com.example.next_vendas.utils.Mascaras
-import com.example.next_vendas.utils.Utils
+import com.example.next_vendas.utils.validarCep
+import com.example.next_vendas.utils.validarCpf
+import com.example.next_vendas.utils.validarDataNascimento
+import com.example.next_vendas.utils.validarEmail
+import com.example.next_vendas.utils.validarEstaConectadoInternet
+import java.util.ArrayList
 
 class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
@@ -166,6 +169,9 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.cliente.cpf = this.edtCpf.text.toString()
         this.cliente.nome = this.edtNomeCompleto.text.toString()
         this.cliente.dataNascimento = this.edtDataNascimento.text.toString()
+
+        val generoSelecionado: String = this.spnGenero.selectedItem.toString()
+        this.cliente.sexo = generoSelecionado
     }
 
     private fun salvarModelPessoaJuridica() {
@@ -218,6 +224,15 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.edtNomeCompleto.setText(this.cliente.nome)
         this.edtCpf.setText(this.cliente.cpf)
         this.edtDataNascimento.setText(this.cliente.dataNascimento)
+
+        val generos: ArrayList<String> = arrayListOf(
+            "Masculino",
+            "Feminino",
+            "Outro"
+        )
+
+        // setando os gêneros no spinner de gêneros de pessoa fisica
+        this.spnGenero.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, generos)
     }
 
     private fun setCamposPessoaJuridica() {
@@ -272,6 +287,9 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         var ok = true
         val telefoneCelular: String = this.edtTelefoneCelular.text.toString().trim()
         val email: String = this.edtEmail.text.toString().trim()
+        val nomeCompleto: String = this.edtNomeCompleto.text.toString().trim()
+        val dataNascimento: String = this.edtDataNascimento.text.toString().trim()
+        val cpf: String = this.edtCpf.text.toString().trim()
         val cep: String = this.edtCep.text.toString().trim()
         val endereco: String = this.edtEndereco.text.toString().trim()
         val bairro: String = this.edtBairro.text.toString().trim()
@@ -289,6 +307,27 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
             this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtTelefoneCelular)
         } else {
             this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtTelefoneCelular)
+        }
+
+        if (nomeCompleto == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtNomeCompleto)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtNomeCompleto)
+        }
+
+        if (dataNascimento == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtDataNascimento)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtDataNascimento)
+        }
+
+        if (cpf == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtCpf)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtCpf)
         }
 
         // validar campos do endereço
@@ -345,14 +384,16 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
                 if (this.cliente.tipoPessoa == Constantes.FISICA) {
                     this.salvarModelPessoaFisica()
 
-                    if (!Utils.validarEmail(this.cliente.email)) {
+                    if (!validarEmail(this.cliente.email)) {
                         msgErro = "E-mail inválido!"
-                    } else if (!Utils.validarCpf(this.cliente.cpf)) {
+                    } else if (!validarCpf(this.cliente.cpf)) {
                         msgErro = "Cpf inválido!"
-                    } else if (!Utils.validarDataNascimento(this.cliente.dataNascimento)) {
+                    } else if (!validarDataNascimento(this.cliente.dataNascimento)) {
                         msgErro = "Data de nascimento inválida!"
-                    } else if (!Utils.validarCep(this.cliente.endereco.cep)) {
+                    } else if (!validarCep(this.cliente.endereco.cep)) {
                         msgErro = "Cep inválido!"
+                    } else if (this.clienteDAO.buscarClientePeloCpf(this.cliente.cpf) != null) {
+                        msgErro = "Já existe um cliente cadastrado com esse cpf."
                     }
 
                 } else {
@@ -365,7 +406,7 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
                     // salvar cliente na base local
                     this.clienteDAO.cadastrar(this.cliente)
 
-                    if (Utils.estaConectadoInternet()) {
+                    if (validarEstaConectadoInternet(this)) {
                         // enviar cliente para o servidor
                         // this.enviarClienteServidor()
                     } else {

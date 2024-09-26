@@ -25,4 +25,9 @@ class Servico {
         return this.getRetrofit().create(LoginServico::class.java)
     }
 
+    fun getConfiguracaoService(): ConfiguracaoServico {
+
+        return this.getRetrofit().create(ConfiguracaoServico::class.java)
+    }
+
 }

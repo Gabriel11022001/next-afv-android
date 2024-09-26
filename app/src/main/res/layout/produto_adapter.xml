@@ -27,8 +27,10 @@
         android:textColor="@color/principal"
         android:textAllCaps="true"
         android:textStyle="bold|italic"
-        android:textSize="18sp"
-        android:layout_marginStart="10dp" />
+        android:textSize="16sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/txt_codigo_produto"
@@ -48,14 +50,9 @@
         app:layout_constraintStart_toStartOf="@id/txt_codigo_produto"
         app:layout_constraintTop_toBottomOf="@id/txt_codigo_produto"
         android:text="R$100.00"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/estilo_preco_produto"
-        android:textColor="@color/principal"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"
-        android:elevation="4dp"
-        android:padding="7dp" />
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
 
     <ImageView
         android:layout_width="wrap_content"
