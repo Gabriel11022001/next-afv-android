@@ -6,20 +6,25 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.next_vendas.api.IOnEnviarServidor
 import com.example.next_vendas.api.LoginApi
 import com.example.next_vendas.dao.GerenciadorBancoDados
+import com.example.next_vendas.utils.Alerta
+import com.example.next_vendas.utils.Loader
+import com.example.next_vendas.utils.validarEmail
+import com.example.next_vendas.utils.validarEstaConectadoInternet
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var edtEmail: EditText
     private lateinit var edtSenha: EditText
     private lateinit var btnRealizarLogin: AppCompatButton
-    private val loginApi: LoginApi = LoginApi()
+    private lateinit var loginApi: LoginApi
+    private lateinit var loader: Loader
+    private lateinit var alerta: Alerta
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,40 +39,84 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
         // criar base de dados
         GerenciadorBancoDados(this)
+
+        this.loader = Loader(this)
+        this.alerta = Alerta(this)
+
+        this.loginApi = LoginApi(getSharedPreferences(
+            "PREFERENCIAS_USUARIO_LOGADO",
+            MODE_PRIVATE
+        ))
     }
 
-    private fun validarFormulario(): Boolean {
+    private fun validarFormulario(): String {
+        var msgErro: String = ""
+        val email: String = this.edtEmail.text.toString().trim()
+        val senha: String = this.edtSenha.text.toString().trim()
 
-        return true
+        if (email == "") {
+            msgErro = "Informe o e-mail."
+        } else if (senha == "") {
+            msgErro = "Informe a senha."
+        } else if (!validarEmail(email)) {
+            msgErro = "E-mail inválido."
+        } else if (senha.length < 5) {
+            msgErro = "Senha inválida."
+        }
+
+        return msgErro
     }
 
     private fun relizarLoginServidor() {
+        // apresentar loader
+        this.loader.iniciarLoader("Carregando, aguarde...")
+
         val email: String = this.edtEmail.text.toString().trim()
         val senha: String = this.edtSenha.text.toString().trim()
         this.loginApi.login(email, senha, object : IOnEnviarServidor {
 
             override fun sucesso(mensagemSucesso: String) {
-                Log.d("sucesso", mensagemSucesso)
+                // esconder o loader
+                loader.finalizarLoader()
+                // redirecionar usuário para a tela de sincronização
+                redirecionarTelaSincronizacao()
             }
 
             override fun erro(mensagemErro: String) {
-                Log.d("erro", mensagemErro)
+                // esconder o loader
+                loader.finalizarLoader()
+                // apresentar alerta com erro
+                alerta.apresentar(mensagemErro)
             }
 
         })
     }
 
+    private fun redirecionarTelaSincronizacao() {
+        val intentTelaSincronizacao = Intent(this, SincronizacaoActivity::class.java)
+        startActivity(intentTelaSincronizacao)
+        finish()
+    }
+
     private fun login() {
 
         try {
+            val resultValidarFormularioLogin: String = this.validarFormulario()
 
-            if (this.validarFormulario()) {
-                this.relizarLoginServidor()
+            if (resultValidarFormularioLogin.isEmpty()) {
+
+                if (!validarEstaConectadoInternet(this)) {
+                    this.alerta.apresentar("Você não está conectado a internet.")
+                } else {
+                    this.relizarLoginServidor()
+                }
+
             } else {
-
+                this.alerta.apresentar(resultValidarFormularioLogin)
             }
 
         } catch (e: Exception) {
+            this.alerta.apresentar("Ocorreu um erro ao tentar-se realizar login, aguarde um instante e tente novamente.")
             Log.e("erro_login", "Ocorreu o seguinte erro ao tentar-se realizar login: ${ e.message.toString() }")
         }
 

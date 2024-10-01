@@ -7,7 +7,7 @@ class Mascaras {
         val TELEFONE_CELULAR: String = "(##) #####-####"
         val TELEFONE_FIXO: String = "(##) ####-####"
         val CPF: String = "###.###.###-##"
-        val CNPJ: String = ""
+        val CNPJ: String = "##.###.###/####-##"
         val CEP: String = "#####-###"
         val DATA_NASCIMENTO: String = "##/##/####"
 
