@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -27,6 +29,7 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
     private lateinit var edtPesquisarClientes: EditText
     private lateinit var btnPesquisarClientes: ImageButton
     private lateinit var recyclerClientes: RecyclerView
+    private lateinit var txtSemClientesCadastrados: TextView
     private lateinit var clienteAdapter: ClienteAdapter
     private lateinit var clienteDAO: ClienteDAO
     private var clientes: ArrayList<Pessoa> = arrayListOf()
@@ -46,6 +49,7 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
         this.edtPesquisarClientes = findViewById(R.id.edt_pesquisar_clientes)
         this.btnPesquisarClientes = findViewById(R.id.btn_pesquisar_clientes)
         this.btnRetornar = findViewById(R.id.btn_retornar)
+        this.txtSemClientesCadastrados = findViewById(R.id.txt_nao_existem_clientes_cadastrados)
 
         // mapear eventos
         this.btnRetornar.setOnClickListener(this)
@@ -82,12 +86,16 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
     private fun listarClientes() {
 
         try {
+            this.recyclerClientes.visibility = GONE
+            this.txtSemClientesCadastrados.visibility = GONE
+
             this.clientes = this.clienteDAO.listarClientes()
 
             if (clientes.size > 0) {
+                this.recyclerClientes.visibility = VISIBLE
                 this.clienteAdapter.setClientes(clientes)
             } else {
-
+                this.txtSemClientesCadastrados.visibility = VISIBLE
             }
 
         } catch (e: Exception) {

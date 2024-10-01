@@ -37,6 +37,11 @@ fun validarCep(cep: String): Boolean {
     return true
 }
 
+fun validarCnpj(cnpj: String): Boolean {
+
+    return true
+}
+
 fun salvarDadosUsuarioLogadoPreferenciasCompartilhadas(
     usuarioModelServico: UsuarioModelServico,
     sharedPreferencesUsuarioLogado: SharedPreferences

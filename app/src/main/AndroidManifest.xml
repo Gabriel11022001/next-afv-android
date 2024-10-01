@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Nextvendas"
         tools:targetApi="31">
         <activity
+            android:name=".ClienteDetalhesActivity"
+            android:exported="false" />
+        <activity
             android:name=".VendaActivity"
             android:exported="false" />
         <activity

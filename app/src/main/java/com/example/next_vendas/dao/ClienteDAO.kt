@@ -30,13 +30,13 @@ class ClienteDAO(contexto: Context): BaseDAO(contexto) {
             valuesCliente.put("data_nascimento", cliente.dataNascimento)
             valuesCliente.put("nome_completo", cliente.nome)
             valuesCliente.put("sexo", cliente.sexo)
-            valuesCliente.put("tipo_pessoa", cliente.tipoPessoa)
+            valuesCliente.put("tipo_pessoa", Constantes.FISICA)
         } else {
             valuesCliente.put("cnpj", cliente.cnpj)
             valuesCliente.put("razao_social", cliente.razaoSocial)
             valuesCliente.put("site", cliente.site)
             valuesCliente.put("inscricao_estadual", cliente.inscricaoEstadual)
-            valuesCliente.put("tipo_pessoa", cliente.tipoPessoa)
+            valuesCliente.put("tipo_pessoa", Constantes.JURIDICA)
         }
 
         if (cliente.id != 0) {
@@ -82,7 +82,12 @@ class ClienteDAO(contexto: Context): BaseDAO(contexto) {
     }
 
     fun setClienteEnviadoServidor(idCliente: Int) {
+        val contentValuesSetarClienteEnviadoServidor = ContentValues()
+        contentValuesSetarClienteEnviadoServidor.put("enviado", true)
 
+        super.bancoDados.update("tb_clientes", contentValuesSetarClienteEnviadoServidor, "id = ?", arrayOf(
+            idCliente.toString()
+        ))
     }
 
     fun listarClientes(): ArrayList<Pessoa> {
@@ -124,7 +129,7 @@ class ClienteDAO(contexto: Context): BaseDAO(contexto) {
         val query: String = "SELECT cli.id, cli.nome_completo AS nome, cli.email, cli.cpf, cli.data_nascimento, cli.sexo," +
                 " cli.tipo_pessoa, cli.telefone_celular, cli.telefone_complementar, cli.telefone_fixo, cli.data_cadastro," +
                 " en.cep, en.complemento, en.endereco, en.bairro, en.cidade, en.estado, en.numero, en.id AS endereco_id FROM tb_clientes AS cli, tb_enderecos_clientes AS en WHERE cli.cpf = ?" +
-                " AND cli.tipo_pessoa = pf AND cli.id = en.cliente_id"
+                " AND cli.tipo_pessoa = 'pf' AND cli.id = en.cliente_id"
         val cursor: Cursor = super.bancoDados.rawQuery(query, arrayOf(
             cpf
         ))
@@ -160,6 +165,66 @@ class ClienteDAO(contexto: Context): BaseDAO(contexto) {
         }
 
         return clientePessoaFisica
+    }
+
+    fun buscarClientePeloId(idCliente: Int): Pessoa? {
+        var cliente: Pessoa? = null
+        val query: String = "SELECT cliente.*, endereco.cep, endereco.complemento, endereco.endereco, endereco.bairro, endereco.cidade, endereco.numero, endereco.estado" +
+                " FROM tb_clientes AS cliente, tb_enderecos_clientes AS endereco" +
+                " WHERE cliente.id = endereco.cliente_id AND cliente.id = ?"
+        val cursor: Cursor = super.bancoDados.rawQuery(query, arrayOf(
+            idCliente.toString()
+        ))
+
+        if (cursor != null) {
+
+            if (cursor.moveToFirst()) {
+                // encontrou o cliente cadastrado na base local do app com o id informado
+                cliente = Pessoa()
+                cliente.id = cursor.getInt(cursor.getColumnIndex("id"))
+                cliente.email = cursor.getString(cursor.getColumnIndex("email"))
+                cliente.telefoneCelular = cursor.getString(cursor.getColumnIndex("telefone_celular"))
+                cliente.telefoneComplementar = cursor.getString(cursor.getColumnIndex("telefone_complementar"))
+                cliente.telefoneFixo = cursor.getString(cursor.getColumnIndex("telefone_fixo"))
+                cliente.endereco = Endereco()
+                cliente.endereco.cep = cursor.getString(cursor.getColumnIndex("cep"))
+                cliente.endereco.endereco = cursor.getString(cursor.getColumnIndex("endereco"))
+                cliente.endereco.bairro = cursor.getString(cursor.getColumnIndex("bairro"))
+                cliente.endereco.cidade = cursor.getString(cursor.getColumnIndex("cidade"))
+                cliente.endereco.numero = cursor.getString(cursor.getColumnIndex("numero"))
+                cliente.endereco.uf = cursor.getString(cursor.getColumnIndex("estado"))
+                cliente.endereco.complemento = cursor.getString(cursor.getColumnIndex("complemento"))
+
+                if (cursor.getString(cursor.getColumnIndex("tipo_pessoa")) == Constantes.FISICA) {
+                    cliente.tipoPessoa = Constantes.FISICA
+                    cliente.nome = cursor.getString(cursor.getColumnIndex("nome_completo"))
+                    cliente.dataNascimento = cursor.getString(cursor.getColumnIndex("data_nascimento"))
+                    cliente.cpf = cursor.getString(cursor.getColumnIndex("cpf"))
+                    cliente.sexo = cursor.getString(cursor.getColumnIndex("sexo"))
+                } else {
+                    cliente.tipoPessoa = Constantes.JURIDICA
+                    cliente.razaoSocial = cursor.getString(cursor.getColumnIndex("razao_social"))
+                    cliente.inscricaoEstadual = cursor.getString(cursor.getColumnIndex("inscricao_estadual"))
+                    cliente.cnpj = cursor.getString(cursor.getColumnIndex("cnpj"))
+                    cliente.site = cursor.getString(cursor.getColumnIndex("site"))
+                }
+
+            }
+
+            cursor.close()
+        }
+
+        return cliente
+    }
+
+    fun deletarCliente(idCliente: Int) {
+        super.bancoDados.delete("tb_clientes", "id = ?", arrayOf(idCliente.toString()))
+        // deletar o endereço do cliente da base local do app
+        this.deletarEnderecoCliente(idCliente)
+    }
+
+    private fun deletarEnderecoCliente(idCliente: Int) {
+        super.bancoDados.delete("tb_enderecos_clientes", "cliente_id = ?", arrayOf(idCliente.toString()))
     }
 
 }
