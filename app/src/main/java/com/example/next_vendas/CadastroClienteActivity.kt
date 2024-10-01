@@ -1,6 +1,8 @@
 package com.example.next_vendas
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ArrayAdapter
@@ -9,8 +11,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.next_vendas.api.ClienteApi
@@ -21,18 +25,25 @@ import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.model.Endereco
 import com.example.next_vendas.model.Pessoa
 import com.example.next_vendas.utils.Alerta
+import com.example.next_vendas.utils.AlertaConfirmarPadrao
 import com.example.next_vendas.utils.Constantes
 import com.example.next_vendas.utils.GerenciaCampoObrigatorio
 import com.example.next_vendas.utils.Loader
 import com.example.next_vendas.utils.Mascaras
-import com.example.next_vendas.utils.Utils
+import com.example.next_vendas.utils.validarCep
+import com.example.next_vendas.utils.validarCpf
+import com.example.next_vendas.utils.validarDataNascimento
+import com.example.next_vendas.utils.validarEmail
+import com.example.next_vendas.utils.validarEstaConectadoInternet
+import java.util.ArrayList
 
 class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
+    private lateinit var alertaConfirmarPadrao: AlertaConfirmarPadrao
     private lateinit var alerta: Alerta
     private lateinit var loader: Loader
     private var cliente: Pessoa = Pessoa()
-    private var idCliente: Int = 0
+    private var clienteId: Int = 0
     private var editar: Boolean = false
     private var cadastroCompletoExpandido: Boolean = false
     private var enderecoExpandido: Boolean = false
@@ -56,6 +67,7 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
     private lateinit var btnSalvarCliente: AppCompatButton
 
     // selecionar tipo de pessoa do cliente
+    private lateinit var rbGrupoTipoPessoa: RadioGroup
     private lateinit var rbTipoPessoaFisica: RadioButton
     private lateinit var rbTipoPessoaJuridica: RadioButton
 
@@ -78,6 +90,12 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
     private lateinit var edtDataNascimento: EditText
     private lateinit var spnGenero: Spinner
 
+    // pessoa juridica
+    private lateinit var edtRazaoSocial: EditText
+    private lateinit var edtCnpj: EditText
+    private lateinit var edtInscricaoEstadual: EditText
+    private lateinit var edtLinkSiteEmpresa: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
@@ -91,6 +109,7 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.txtTitulo = findViewById(R.id.txt_titulo)
         this.btnFiltro = findViewById(R.id.btn_filtro_menu)
         this.btnAdicionar = findViewById(R.id.btn_adicionar_menu)
+        this.rbGrupoTipoPessoa = findViewById(R.id.radio_group_tipo_pessoa)
         this.rbTipoPessoaJuridica = findViewById(R.id.rb_pessoa_juridica)
         this.rbTipoPessoaFisica = findViewById(R.id.rb_pessoa_fisica)
         this.edtTelefoneCelular = findViewById(R.id.edt_telefone_celular)
@@ -112,18 +131,20 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.linearContainerExpandirEnderecoCliente.setOnClickListener(this)
         this.btnSalvarCliente.setOnClickListener(this)
 
-        this.rbTipoPessoaFisica.setOnCheckedChangeListener { radio, i ->
-            // o usuário selecionou o rb de pessoa física
-            salvarModelPessoa()
-            salvarModelPessoaJuridica()
-            setCamposPessoaFisica()
-        }
+        this.rbGrupoTipoPessoa.setOnCheckedChangeListener { radioGrupoTipoPessoa, idRadioTipoPessoaSelecionado ->
 
-        this.rbTipoPessoaJuridica.setOnCheckedChangeListener { radio, i ->
-            // o usuário selecionou o rb de pessoa juridica
-            salvarModelPessoa()
-            salvarModelPessoaFisica()
-            setCamposPessoaJuridica()
+            if (idRadioTipoPessoaSelecionado == R.id.rb_pessoa_fisica) {
+                // o usuário selecionou o rb de pessoa física
+                salvarModelPessoa()
+                salvarModelPessoaJuridica()
+                setCamposPessoaFisica()
+            } else {
+                // o usuário selecionou o rb de pessoa juridica
+                salvarModelPessoa()
+                salvarModelPessoaFisica()
+                setCamposPessoaJuridica()
+            }
+
         }
 
         this.txtTitulo.text = "Cadastro de cliente"
@@ -142,6 +163,28 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         }
 
         this.setCamposEndereco()
+
+        /**
+         * evento que vai redirecionar o usuário para a tela com os detalhes do cliente
+         * cadastrado
+         */
+        val onConfirmarCadastroCliente: () -> Unit = {
+
+            if (clienteId != 0) {
+                this.redirecionarUsuarioTelaDetalhesCliente()
+            }
+
+        }
+
+        this.alertaConfirmarPadrao = AlertaConfirmarPadrao(this, "Cadastro de cliente", onConfirmarCadastroCliente)
+    }
+
+    // redirecionar o usuário para a tela com os detalhes do cliente consultado a partir do id passado
+    private fun redirecionarUsuarioTelaDetalhesCliente() {
+        val intentTelaDetalhesCliente = Intent(this, ClienteDetalhesActivity::class.java)
+        intentTelaDetalhesCliente.putExtra("cliente_id", this.clienteId)
+        startActivity(intentTelaDetalhesCliente)
+        finish()
     }
 
     private fun salvarModelPessoa() {
@@ -166,10 +209,16 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.cliente.cpf = this.edtCpf.text.toString()
         this.cliente.nome = this.edtNomeCompleto.text.toString()
         this.cliente.dataNascimento = this.edtDataNascimento.text.toString()
+
+        val generoSelecionado: String = this.spnGenero.selectedItem.toString()
+        this.cliente.sexo = generoSelecionado
     }
 
     private fun salvarModelPessoaJuridica() {
-
+        this.cliente.cnpj = this.edtCnpj.text.toString()
+        this.cliente.razaoSocial = this.edtRazaoSocial.text.toString()
+        this.cliente.inscricaoEstadual = this.edtInscricaoEstadual.text.toString()
+        this.cliente.site = this.edtLinkSiteEmpresa.text.toString()
     }
 
     private fun setCamposEndereco() {
@@ -218,10 +267,30 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.edtNomeCompleto.setText(this.cliente.nome)
         this.edtCpf.setText(this.cliente.cpf)
         this.edtDataNascimento.setText(this.cliente.dataNascimento)
+
+        val generos: ArrayList<String> = arrayListOf(
+            "Masculino",
+            "Feminino",
+            "Outro"
+        )
+
+        // setando os gêneros no spinner de gêneros de pessoa fisica
+        this.spnGenero.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, generos)
     }
 
     private fun setCamposPessoaJuridica() {
+        val viewConteudoCadastroPessoaJuridica: View = layoutInflater.inflate(R.layout.conteudo_cadastro_completo_pj, null)
+        this.linearContainerCadastroCompleto.removeAllViews()
+        this.linearContainerCadastroCompleto.addView(viewConteudoCadastroPessoaJuridica)
 
+        // mapear campos
+        this.edtCnpj = viewConteudoCadastroPessoaJuridica.findViewById(R.id.edt_cnpj_cliente_pj)
+        this.edtRazaoSocial = viewConteudoCadastroPessoaJuridica.findViewById(R.id.edt_razao_social_cliente_pj)
+        this.edtInscricaoEstadual = viewConteudoCadastroPessoaJuridica.findViewById(R.id.edt_inscricao_estadual_cliente_pj)
+        this.edtLinkSiteEmpresa = viewConteudoCadastroPessoaJuridica.findViewById(R.id.edt_link_site_cliente_pj)
+
+        // definir máscara do cnpj no campo de cnpj da pessoa juridica
+        this.edtCnpj.addTextChangedListener(MascaraTextWhatcher(this.edtCnpj, Mascaras.CNPJ))
     }
 
     private fun controlarExpandirSecao(secao: String) {
@@ -272,6 +341,9 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         var ok = true
         val telefoneCelular: String = this.edtTelefoneCelular.text.toString().trim()
         val email: String = this.edtEmail.text.toString().trim()
+        val nomeCompleto: String = this.edtNomeCompleto.text.toString().trim()
+        val dataNascimento: String = this.edtDataNascimento.text.toString().trim()
+        val cpf: String = this.edtCpf.text.toString().trim()
         val cep: String = this.edtCep.text.toString().trim()
         val endereco: String = this.edtEndereco.text.toString().trim()
         val bairro: String = this.edtBairro.text.toString().trim()
@@ -289,6 +361,27 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
             this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtTelefoneCelular)
         } else {
             this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtTelefoneCelular)
+        }
+
+        if (nomeCompleto == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtNomeCompleto)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtNomeCompleto)
+        }
+
+        if (dataNascimento == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtDataNascimento)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtDataNascimento)
+        }
+
+        if (cpf == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtCpf)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtCpf)
         }
 
         // validar campos do endereço
@@ -325,12 +418,100 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
     private fun validarFormularioClientePj(): Boolean {
         var ok = true
+        val telefoneCelular: String = this.edtTelefoneCelular.text.toString().trim()
+        val email: String = this.edtEmail.text.toString().trim()
+        val cnpj: String = this.edtCnpj.text.toString()
+        val razaoSocial: String = this.edtRazaoSocial.text.toString()
+        val inscricaoEstadual: String = this.edtInscricaoEstadual.text.toString()
+
+        if (telefoneCelular == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtTelefoneCelular)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtTelefoneCelular)
+        }
+
+        if (email == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtEmail)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtEmail)
+        }
+
+        if (cnpj == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtCnpj)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtCnpj)
+        }
+
+        if (razaoSocial == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtRazaoSocial)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtRazaoSocial)
+        }
+
+        if (inscricaoEstadual == "") {
+            ok = false
+            this.gerenciaCampoObrigatorio.setErroCampoObrigatorio(this.edtInscricaoEstadual)
+        } else {
+            this.gerenciaCampoObrigatorio.removeErroCampoOgrigatorio(this.edtInscricaoEstadual)
+        }
 
         return ok
     }
 
     // método onde envio o cliente para o servidor
-    private fun enviarClienteServidor() {
+    private fun enviarClienteServidor(idCliente: Int) {
+
+        if (validarEstaConectadoInternet(this)) {
+            apresentarLoader("Enviando dados do cliente para o servidor, aguarde...")
+
+            val clienteEnviar: Pessoa? = this.clienteDAO.buscarClientePeloId(idCliente)
+
+            if (clienteEnviar != null) {
+
+                ClienteApi.cadastrarCliente(clienteEnviar, object : IOnEnviarServidor {
+
+                    override fun sucesso(mensagemSucesso: String) {
+                        esconderLoader()
+                        clienteDAO.setClienteEnviadoServidor(idCliente = idCliente)
+                        /**
+                         * apresentar alerta de sucesso que ao ser clicado no botão
+                         * "ok" vai redirecionar o usuário para a tela com as informações
+                         * do cliente que acabou de ser cadastrado
+                         */
+
+                        clienteId = idCliente
+
+                        alertaConfirmarPadrao.apresentar("Cliente enviado com sucesso para o servidor.")
+                    }
+
+                    override fun erro(mensagemErro: String) {
+                        esconderLoader()
+                        /**
+                         * apresentar alerta de erro ao usuário informando para o mesmo
+                         * tentar enviar os dados do cliente para o servidor novamente
+                         */
+                        // deletar o cliente que foi cadastrado na base local do aplicativo
+                        clienteDAO.deletarCliente(idCliente = idCliente)
+                    }
+
+                })
+            }
+
+        } else {
+            /**
+             * apresentar alerta para o usuário, informando que o cliente será enviado
+             * quando o usuário estiver conectado a internet e redirecionar o mesmo
+             * para a tela com a listagem dos dados do cliente quando o mesmo clicar no
+             * botão "ok"
+             */
+            clienteId = idCliente
+
+            this.alertaConfirmarPadrao.apresentar("Os dados do cliente serão enviados ao servidor quando você estiver conectado a internet.")
+        }
 
     }
 
@@ -345,14 +526,16 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
                 if (this.cliente.tipoPessoa == Constantes.FISICA) {
                     this.salvarModelPessoaFisica()
 
-                    if (!Utils.validarEmail(this.cliente.email)) {
+                    if (!validarEmail(this.cliente.email)) {
                         msgErro = "E-mail inválido!"
-                    } else if (!Utils.validarCpf(this.cliente.cpf)) {
+                    } else if (!validarCpf(this.cliente.cpf)) {
                         msgErro = "Cpf inválido!"
-                    } else if (!Utils.validarDataNascimento(this.cliente.dataNascimento)) {
+                    } else if (!validarDataNascimento(this.cliente.dataNascimento)) {
                         msgErro = "Data de nascimento inválida!"
-                    } else if (!Utils.validarCep(this.cliente.endereco.cep)) {
+                    } else if (!validarCep(this.cliente.endereco.cep)) {
                         msgErro = "Cep inválido!"
+                    } else if (this.clienteDAO.buscarClientePeloCpf(this.cliente.cpf) != null) {
+                        msgErro = "Já existe um cliente cadastrado com esse cpf."
                     }
 
                 } else {
@@ -363,15 +546,8 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
                     this.alerta.apresentar(msgErro)
                 } else {
                     // salvar cliente na base local
-                    this.clienteDAO.cadastrar(this.cliente)
-
-                    if (Utils.estaConectadoInternet()) {
-                        // enviar cliente para o servidor
-                        // this.enviarClienteServidor()
-                    } else {
-
-                    }
-
+                    val idClienteCadastrado = this.clienteDAO.cadastrar(this.cliente)
+                    this.enviarClienteServidor(idClienteCadastrado)
                 }
 
             } else {
@@ -379,7 +555,7 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
             }
 
         } catch (e: Exception) {
-
+            Log.e("erro_cadastrar_cliente", e.message.toString(), e)
         }
 
     }

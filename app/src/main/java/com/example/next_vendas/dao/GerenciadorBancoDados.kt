@@ -38,7 +38,8 @@ open class GerenciadorBancoDados(contexto: Context): SQLiteOpenHelper(
                 "sexo TEXT," +
                 "cnpj TEXT," +
                 "inscricao_estadual TEXT," +
-                "site TEXT)")
+                "site TEXT," +
+                "enviado BOOLEAN DEFAULT(false))")
         // criar tabela de endereços dos clientes
         bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_enderecos_clientes(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +

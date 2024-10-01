@@ -1,14 +1,18 @@
 package com.example.next_vendas.api
 
+import android.content.SharedPreferences
 import android.util.Log
 import com.example.next_vendas.model_servico.UsuarioModelServico
 import com.example.next_vendas.servico.RespostaBase
 import com.example.next_vendas.servico.Servico
+import com.example.next_vendas.utils.salvarDadosUsuarioLogadoPreferenciasCompartilhadas
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginApi {
+class LoginApi(
+    private val sharedPreferencesUsuarioLogado: SharedPreferences
+) {
 
     fun login(email: String, senha: String, iOnEnviarServidor: IOnEnviarServidor) {
         Log.e("login", "Realizando requisição de login...")
@@ -36,7 +40,9 @@ class LoginApi {
                                 // usuário não está ativo
                                 iOnEnviarServidor.erro("Seu perfil está inativo, entre em contato com o administrados do sistema e solicite o desbloqueio.")
                             } else {
+                                val usuarioLogado: UsuarioModelServico = corpoResposta.corpo
                                 // salvar os dados do usuário logado nas preferências compartilhadas
+                                salvarDadosUsuarioLogadoPreferenciasCompartilhadas(usuarioLogado, sharedPreferencesUsuarioLogado)
                                 iOnEnviarServidor.sucesso("Login efetuado com sucesso.")
                             }
 

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Servico {
 
-    private val URL_BASE: String = "http://192.168.0.103:8080/api/"
+    private val URL_BASE: String = "http://192.168.0.104:8080/api/"
 
     private fun getRetrofit(): Retrofit {
 
@@ -23,6 +23,11 @@ class Servico {
     fun getLoginService(): LoginServico {
 
         return this.getRetrofit().create(LoginServico::class.java)
+    }
+
+    fun getConfiguracaoService(): ConfiguracaoServico {
+
+        return this.getRetrofit().create(ConfiguracaoServico::class.java)
     }
 
 }

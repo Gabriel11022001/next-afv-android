@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VendaCarrinhoFragment"
+    android:background="@color/cinza_fundo_telas"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/cinza_separador_linhas"
+        android:padding="10dp"
+        android:elevation="4dp" >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_adicionar_produto_carrinho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_btn_adicionar_produto_carrinho"
+            android:background="@drawable/estilo_btn_padrao"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:layout_marginEnd="10dp" >
+
+                <TextView
+                    android:id="@+id/txt_valor_total_carrinho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R$0.00"
+                    android:textColor="@color/principal"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor total(R$)"
+                    android:textColor="@color/black"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/txt_qtd_unidades_carrinho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/principal"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unidades carrinho"
+                    android:textColor="@color/black"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_items_carrinho"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_nenhum_produto_carrinho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nenhum produto adicionado no carrinho de compras."
+        android:textAlignment="center"
+        android:textColor="@color/principal"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+</LinearLayout>
