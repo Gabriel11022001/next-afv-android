@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:background="@drawable/estilo_adapter_padrao"
+    android:elevation="5dp"
+    android:layout_margin="7dp" >
+
+    <ImageView
+        android:id="@+id/img_produto_adicionar_carrinho"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_sem_foto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_nome_produto_adicionar_carrinho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/img_produto_adicionar_carrinho"
+        app:layout_constraintTop_toTopOf="@id/img_produto_adicionar_carrinho"
+        android:text="Coca cola de 2 litros"
+        android:textColor="@color/principal"
+        android:textAllCaps="true"
+        android:textStyle="bold|italic"
+        android:textSize="16sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txt_preco_unitario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preço unitário: R$1000.00"
+        app:layout_constraintStart_toStartOf="@id/txt_nome_produto_adicionar_carrinho"
+        app:layout_constraintTop_toBottomOf="@id/txt_nome_produto_adicionar_carrinho"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/black"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/txt_quantidade_unidades_estoque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unidades estoque: 100"
+        app:layout_constraintStart_toStartOf="@id/txt_preco_unitario"
+        app:layout_constraintTop_toBottomOf="@id/txt_preco_unitario"
+        android:textColor="@color/principal"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/txt_quantidade_unidades_carrinho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unidades carrinho: 20"
+        app:layout_constraintStart_toStartOf="@id/txt_quantidade_unidades_estoque"
+        app:layout_constraintTop_toBottomOf="@id/txt_quantidade_unidades_estoque"
+        android:textColor="@color/secundaria"
+        android:textStyle="italic|bold"
+        android:layout_marginTop="4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

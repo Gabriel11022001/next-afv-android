@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilActivity"
+    android:background="@color/cinza_fundo_telas" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp" >
+
+        <include layout="@layout/menu_topo" android:id="@+id/menu_topo_perfil_usuario" />
+
+        <LinearLayout
+            android:id="@+id/linear_container_iniciais_usuario_logado"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/estilo_fundo_redondo_representacao_perfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/menu_topo_perfil_usuario"
+            android:elevation="4dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:backgroundTint="@color/principal" >
+
+            <TextView
+                android:id="@+id/txt_iniciais_usuario_logado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="AA"
+                android:textAllCaps="true"
+                android:textSize="30sp"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <!-- botão para edição de dados cadastrais do usuário logado -->
+        <ImageButton
+            android:id="@+id/btn_alterar_perfil_usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/txt_content_description_btn_alterar_perfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/menu_topo_perfil_usuario"
+            android:layout_margin="10dp"
+            android:background="@drawable/estilo_btn_padrao"
+            android:src="@drawable/ic_editar_perfil"
+            android:padding="10dp"
+            android:elevation="2dp" />
+
+        <LinearLayout
+            android:id="@+id/linear_container_perfil_usuario_logado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear_container_iniciais_usuario_logado"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/estilo_container_padrao"
+            android:elevation="3dp"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_perfil_usuario_logado_titulo"
+                android:textColor="@color/principal"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_lb_perfil_nome_completo"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                
+                <TextView
+                    android:id="@+id/txt_nome_completo_usuario_logado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sophia Manuela Jaqueline da Cunha"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|end" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cinza_separador_linhas"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_lb_perfil_email"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/txt_email_usuario_logado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="testeemail@teste.com"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|end" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cinza_separador_linhas"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_lb_perfil_telefone_celular"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/txt_telefone_celular_usuario_logado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(14) 99877-6543"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|end" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cinza_separador_linhas"
+                android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_lb_perfil_nivel_acesso"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/txt_nivel_acesso_usuario_logado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Administrador"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center|end" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

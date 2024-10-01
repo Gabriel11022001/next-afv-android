@@ -13,4 +13,16 @@ open class Pessoa {
     var endereco: Endereco = Endereco()
     var tipoPessoa: String = Constantes.FISICA
 
+    // pessoa física
+    var nome: String = ""
+    var cpf: String = ""
+    var dataNascimento: String = ""
+    var sexo: String = ""
+
+    // pessoa juridica
+    var razaoSocial: String = ""
+    var cnpj: String = ""
+    var inscricaoEstadual: String = ""
+    var site: String = ""
+
 }

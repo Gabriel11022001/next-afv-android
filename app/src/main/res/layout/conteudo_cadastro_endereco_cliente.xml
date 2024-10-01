@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_lb_cep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_cep"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp"
+        android:paddingBottom="10dp" >
+
+        <!-- cep do cliente -->
+        <EditText
+            android:id="@+id/edt_cep_cliente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="@drawable/estilo_campo_padrao"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/txt_hint_campo_cep_cliente"
+            android:textColor="@color/principal"
+            android:textColorHint="@color/black"
+            android:textSize="16sp"
+            android:elevation="4dp"
+            android:padding="15dp"
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+        <ImageButton
+            android:id="@+id/btn_consultar_cep"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_consultar_cep"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_lb_endereco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_endereco"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- endereço do cliente -->
+    <EditText
+        android:id="@+id/edt_endereco_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_endereco_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_complemento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_complemento"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- complemento do cliente -->
+    <EditText
+        android:id="@+id/edt_complemento_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_complemento_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_bairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_bairro"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- bairro do cliente -->
+    <EditText
+        android:id="@+id/edt_bairro_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_bairro_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_cidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_cidade"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- cidade do cliente -->
+    <EditText
+        android:id="@+id/edt_cidade_cliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_cidade_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_lb_estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_lb_estado"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/principal"
+                android:textStyle="bold|italic"
+                android:textSize="18sp" />
+
+            <!-- estado do endereço do cliente -->
+            <Spinner
+                android:id="@+id/spn_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_lb_numero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_lb_numero"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/principal"
+                android:textStyle="bold|italic"
+                android:textSize="18sp" />
+
+            <!-- número do cliente -->
+            <EditText
+                android:id="@+id/edt_numero_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/estilo_campo_padrao"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:hint="@string/txt_hint_campo_numero_cliente"
+                android:textColor="@color/principal"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:elevation="4dp"
+                android:padding="15dp"
+                android:inputType="text"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

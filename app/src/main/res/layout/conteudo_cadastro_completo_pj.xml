@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_lb_razao_social"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_razao_social"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- razão social do cliente pj -->
+    <EditText
+        android:id="@+id/edt_razao_social_cliente_pj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_razao_social_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_inscricao_estadual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_inscricao_estadual"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- inscrição estadual do cliente pj -->
+    <EditText
+        android:id="@+id/edt_inscricao_estadual_cliente_pj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_inscricao_estadual_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="number"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_cnpj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_cnpj"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- cnpj do cliente pj -->
+    <EditText
+        android:id="@+id/edt_cnpj_cliente_pj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_cnpj_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="number"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_lb_link_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_lb_site"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold|italic"
+        android:textSize="18sp" />
+
+    <!-- link do site do cliente pj -->
+    <EditText
+        android:id="@+id/edt_link_site_cliente_pj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/estilo_campo_padrao"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txt_hint_campo_link_site_cliente"
+        android:textColor="@color/principal"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        android:elevation="4dp"
+        android:padding="15dp"
+        android:inputType="text"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>
