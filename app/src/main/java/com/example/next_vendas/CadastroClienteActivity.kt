@@ -496,6 +496,8 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
                          */
                         // deletar o cliente que foi cadastrado na base local do aplicativo
                         clienteDAO.deletarCliente(idCliente = idCliente)
+
+                        alerta.apresentar(mensagemErro)
                     }
 
                 })

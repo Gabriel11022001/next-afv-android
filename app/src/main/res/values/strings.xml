@@ -73,4 +73,5 @@
     <string name="txt_lb_site">Site</string>
     <string name="txt_hint_campo_link_site_cliente">Digite o link do site...</string>
     <string name="txt_nao_existem_clientes_cadastrados">Não existem clientes cadastrados.</string>
+    <string name="txt_nao_informado">----- Não informado -----</string>
 </resources>
