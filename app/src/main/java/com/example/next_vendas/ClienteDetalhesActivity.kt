@@ -15,6 +15,7 @@ import com.example.next_vendas.adapter.OpcaoPerfilClienteAdapter
 import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.model.Pessoa
 import com.example.next_vendas.utils.Constantes
+import com.example.next_vendas.utils.obterIniciaisNomeSobrenome
 
 class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
 
@@ -23,6 +24,7 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
     private lateinit var btnAdicionar: ImageButton
     private lateinit var btnRetornar: ImageButton
 
+    private lateinit var txtIniciaisCliente: TextView
     private lateinit var txtDocumentoCliente: TextView
     private lateinit var txtCliente: TextView
     private lateinit var txtEmailCliente: TextView
@@ -73,8 +75,19 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
         // configurar RecyclerView com opções do perfil do cliente
         this.recyclerOpcoesPerfilCliente.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
+        // configurar evento de selecionar opção do perfil
         val iOnRealizarOperacaoPerfilCliente: (String) -> Unit = { opcao ->
-            Log.d("opcao_selecionada", opcao)
+
+            if (opcao == "Editar") {
+                editarCliente()
+            } else if (opcao == "Deletar") {
+                deletarCliente()
+            } else if (opcao == "Vendas") {
+                listarComprasCliente()
+            } else {
+                realizarVendaCliente()
+            }
+
         }
 
         this.opcaoPerfilClienteAdapter = OpcaoPerfilClienteAdapter(
@@ -94,6 +107,7 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
 
         this.recyclerOpcoesPerfilCliente = findViewById(R.id.recycler_opcoes_perfil_cliente)
 
+        this.txtIniciaisCliente = findViewById(R.id.txt_iniciais_cliente)
         this.txtCliente = findViewById(R.id.txt_nome_razao_social_cliente)
         this.txtDocumentoCliente = findViewById(R.id.txt_documento_cliente)
         this.txtEmailCliente = findViewById(R.id.txt_email_cliente)
@@ -139,6 +153,7 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
             this.txtDataNascimentoCliente.visibility = VISIBLE
 
             // apresentar dados da pessoa fisica
+            this.txtIniciaisCliente.text = this.cliente.nome.obterIniciaisNomeSobrenome()
             this.txtCliente.text = this.cliente.nome.uppercase()
             this.txtDocumentoCliente.text = this.cliente.cpf
             this.txtGeneroCliente.text = this.cliente.sexo.uppercase()
@@ -165,6 +180,22 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun retornar() {
+
+    }
+
+    private fun editarCliente() {
+
+    }
+
+    private fun deletarCliente() {
+
+    }
+
+    private fun listarComprasCliente() {
+
+    }
+
+    private fun realizarVendaCliente() {
 
     }
 
