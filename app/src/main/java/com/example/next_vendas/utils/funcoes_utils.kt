@@ -106,8 +106,3 @@ fun salvarConfiguracoesPreferenciasCompartilhadas(
     }
 
 }
-
-fun obterIniciaisNomeCliente(nomeCliente: String): String {
-
-    return ""
-}

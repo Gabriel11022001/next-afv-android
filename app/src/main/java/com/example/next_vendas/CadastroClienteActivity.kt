@@ -30,6 +30,7 @@ import com.example.next_vendas.utils.Constantes
 import com.example.next_vendas.utils.GerenciaCampoObrigatorio
 import com.example.next_vendas.utils.Loader
 import com.example.next_vendas.utils.Mascaras
+import com.example.next_vendas.utils.removerMascaras
 import com.example.next_vendas.utils.validarCep
 import com.example.next_vendas.utils.validarCpf
 import com.example.next_vendas.utils.validarDataNascimento
@@ -156,6 +157,23 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.edtTelefoneFixo.addTextChangedListener(MascaraTextWhatcher(this.edtTelefoneFixo, Mascaras.TELEFONE_FIXO))
         this.edtTelefoneComplementar.addTextChangedListener(MascaraTextWhatcher(this.edtTelefoneComplementar, Mascaras.TELEFONE_CELULAR))
 
+        // validar se id_cliente foi informado na intent
+        val clienteIdInformadoIntent = intent.getIntExtra("id_cliente", 0)
+
+        if (clienteIdInformadoIntent != 0) {
+            // buscar cliente pelo id
+            this.clienteId = clienteIdInformadoIntent
+            this.editar = true
+            this.cliente = this.clienteDAO.buscarClientePeloId(this.clienteId)!!
+
+            if (this.cliente.tipoPessoa == Constantes.FISICA) {
+                this.rbTipoPessoaFisica.isChecked = true
+            } else {
+                this.rbTipoPessoaJuridica.isChecked = true
+            }
+
+        }
+
         if (this.rbTipoPessoaFisica.isChecked) {
             this.setCamposPessoaFisica()
         } else {
@@ -163,6 +181,25 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         }
 
         this.setCamposEndereco()
+
+        if (this.clienteId != 0) {
+
+            if (this.cliente.endereco.cep.isNotBlank()) {
+                // expandir seção com os dados do endereço
+                this.enderecoExpandido = true
+                this.linearContainerCadastroClienteEndereco.visibility = View.VISIBLE
+                this.icExpandirEndereco.setImageResource(R.drawable.ic_seta_nao_expandir)
+
+                this.apresentarEnderecoCliente()
+            }
+
+            // expandir seção do cadastro completo
+            this.cadastroCompletoExpandido = true
+            this.linearContainerCadastroCompleto.visibility = View.VISIBLE
+            this.icExpandirCadastroCompleto.setImageResource(R.drawable.ic_seta_nao_expandir)
+
+            this.apresentarDadosCliente()
+        }
 
         /**
          * evento que vai redirecionar o usuário para a tela com os detalhes do cliente
@@ -568,6 +605,68 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
     private fun esconderLoader() {
         this.loader.finalizarLoader()
+    }
+
+    private fun apresentarDadosCliente() {
+        this.edtEmail.setText(this.cliente.email)
+        this.edtTelefoneFixo.setText(this.cliente.telefoneFixo)
+        this.edtTelefoneCelular.setText(this.cliente.telefoneCelular)
+        this.edtTelefoneComplementar.setText(this.cliente.telefoneComplementar)
+
+        if (this.cliente.tipoPessoa == Constantes.FISICA) {
+            this.apresentarDadosClientePf()
+        } else {
+            this.apresentarDadosClientePj()
+        }
+
+    }
+
+    private fun apresentarDadosClientePf() {
+        this.edtNomeCompleto.setText(this.cliente.nome)
+        this.edtCpf.setText(this.cliente.cpf.removerMascaras())
+        this.edtDataNascimento.setText(this.cliente.dataNascimento)
+
+        val generos: List<String> = listOf("Masculino", "Feminino", "Outro")
+
+        for (contador in generos.indices) {
+
+            if (generos[ contador ].lowercase() == this.cliente.sexo.lowercase()) {
+                this.spnGenero.setSelection(contador)
+            }
+
+        }
+
+    }
+
+    private fun apresentarDadosClientePj() {
+
+    }
+
+    private fun apresentarEnderecoCliente() {
+        this.edtCep.setText(this.cliente.endereco.cep)
+        this.edtComplemento.setText(this.cliente.endereco.complemento)
+        this.edtEndereco.setText(this.cliente.endereco.endereco)
+        this.edtBairro.setText(this.cliente.endereco.bairro)
+        this.edtCidade.setText(this.cliente.endereco.cidade)
+        this.edtNumero.setText(this.cliente.endereco.numero)
+
+        val estados: List<String> = listOf(
+            "SP",
+            "RJ",
+            "PR"
+        )
+
+        var posicaoEstado: Int = 0
+
+        for (contador in estados.indices) {
+
+            if (this.cliente.endereco.uf == estados[ contador ]) {
+                posicaoEstado = contador
+            }
+
+        }
+
+        this.spnEstado.setSelection(posicaoEstado)
     }
 
     override fun onClick(p0: View?) {

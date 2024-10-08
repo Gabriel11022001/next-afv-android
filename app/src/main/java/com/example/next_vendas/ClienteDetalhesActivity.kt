@@ -1,5 +1,6 @@
 package com.example.next_vendas
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -184,7 +185,9 @@ class ClienteDetalhesActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun editarCliente() {
-
+        val intentEditarCliente = Intent(this, CadastroClienteActivity::class.java)
+        intentEditarCliente.putExtra("id_cliente", this.cliente.id)
+        startActivity(intentEditarCliente)
     }
 
     private fun deletarCliente() {

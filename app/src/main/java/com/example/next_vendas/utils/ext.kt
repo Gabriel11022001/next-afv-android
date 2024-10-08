@@ -10,3 +10,21 @@ fun String.obterIniciaisNomeSobrenome(): String {
 
     return primeiroCaracterNome + primeiroCaracterSobrenome
 }
+
+fun String.removerMascaras(): String {
+    var texto: String = this
+
+    if (texto.contains(".")) {
+        texto = texto.replace(".", "")
+    }
+
+    if (texto.contains("-")) {
+        texto = texto.replace("-", "")
+    }
+
+    if (texto.contains("/")) {
+       texto = texto.replace("/", "")
+    }
+
+    return texto.trim()
+}
