@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.next_vendas.R
+import com.example.next_vendas.listener.IOnVisualizar
 import com.example.next_vendas.model.Pessoa
 import com.example.next_vendas.utils.Constantes
 import com.example.next_vendas.view_holder.ClienteViewHolder
 import java.util.ArrayList
 
 class ClienteAdapter(
-    val contexto: Context
+    val contexto: Context,
+    private val iOnVisualizar: IOnVisualizar
 ): Adapter<ClienteViewHolder>() {
 
     private var clientes: ArrayList<Pessoa> = arrayListOf()
@@ -41,6 +43,9 @@ class ClienteAdapter(
             clienteViewHolder.txtClienteNome.text = cliente.razaoSocial
         }
 
+        clienteViewHolder.itemView.setOnClickListener {
+            iOnVisualizar.visualizar(idEntidade = cliente.id)
+        }
     }
 
     fun setClientes(clientes: ArrayList<Pessoa>) {

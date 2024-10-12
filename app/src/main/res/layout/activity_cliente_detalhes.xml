@@ -1,10 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClienteDetalhesActivity">
+    tools:context=".ClienteDetalhesActivity"
+    android:background="@color/cinza_fundo_telas" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp" >
+
+        <include layout="@layout/menu_topo" />
+
+        <!-- seção com as iniciais do cliente -->
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/estilo_fundo_redondo_representacao_perfil"
+            android:backgroundTint="@color/principal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:elevation="4dp" >
+
+            <TextView
+                android:id="@+id/txt_iniciais_cliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AA"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <!--
+            RecyclerView com a listagem contendo as opções
+            do cliente, como editar, deletar, visualizar vendas
+            realizadas ao cliente e vender para ele
+        -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_opcoes_perfil_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
+        <!-- nome ou razão social do cliente -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cliente"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:id="@+id/txt_nome_razao_social_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome ou razão social do cliente"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- número do documento do cliente(cpf ou cnpj) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Documento"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_documento_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--- nenhum documento informado ---"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- e-mail do cliente -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_email_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="teste@teste.com"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- telefone celular do cliente -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone celular"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_telefone_celular_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(00) 00000-0000"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- telefone fixo do cliente -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone fixo"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_telefone_fixo_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(00) 0000-0000"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- telefone complementar do cliente -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone complementar"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_telefone_complementar_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(00) 00000-0000"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- gênero do cliente(quando é pf) -->
+        <TextView
+            android:id="@+id/txt_label_genero_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gênero"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_genero_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masculino"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+        <!-- data de nascimento do cliente(quando é pf) -->
+        <TextView
+            android:id="@+id/txt_label_data_nascimento_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data de nascimento"
+            android:textColor="@color/principal"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/txt_data_nascimento_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00/00/0000"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp" />
+
+    </LinearLayout>
+    
+</ScrollView>
