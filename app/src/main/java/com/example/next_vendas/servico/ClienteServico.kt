@@ -1,13 +1,11 @@
 package com.example.next_vendas.servico
 
 import com.example.next_vendas.model_servico.ClienteModelServico
-import com.example.next_vendas.model_servico.TotalEntidadeModelServico
+import com.example.next_vendas.model_servico.PaginaAtualModelServico
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
 
 interface ClienteServico {
 
@@ -20,11 +18,7 @@ interface ClienteServico {
     fun editarCliente(@Body clienteModelServico: ClienteModelServico): Call<RespostaBase<ClienteModelServico>>
 
     // consultar clientes do servidor com paginação
-    @GET("listar_clientes.php/{paginaAtual}")
-    fun listarTodosCliente(@Path("paginaAtual") paginaAtual: Int): Call<ArrayList<ClienteModelServico>>
-
-    // buscar do servidor total de clientes cadastrados na base final
-    @GET("buscar_total_clientes.php")
-    fun buscarTotalClientes(): Call<RespostaBase<TotalEntidadeModelServico>>
+    @POST("sinc_clientes.php")
+    fun listarClientes(@Body paginaAtualModelServico: PaginaAtualModelServico): Call<RespostaBase<ArrayList<ClienteModelServico>>>
 
 }

@@ -34,10 +34,10 @@ class ProdutoAdapter(
         val produto: Produto = this.produtos[ position ]
         holder.txtNomeProduto.text = produto.nome.uppercase()
         holder.txtCodigoProduto.text = produto.codigo
-        holder.txtPrecoProduto.text = "R$${ produto.preco }"
+        holder.txtPrecoProduto.text = "R$${ produto.precoVenda }"
 
         if (produto.fotoProduto != "") {
-            // o produto possui foto, apresentar a foto
+            // o produto possui foto, apresentar a foto utilizando o picasso
         }
 
         // evento de visualizar os dados do produto

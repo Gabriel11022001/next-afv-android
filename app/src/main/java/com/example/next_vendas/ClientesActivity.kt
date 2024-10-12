@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.next_vendas.adapter.ClienteAdapter
 import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.listener.IOnConfirmarListener
+import com.example.next_vendas.listener.IOnVisualizar
 import com.example.next_vendas.model.Pessoa
 import com.example.next_vendas.utils.AlertaConfirmarVoltar
 import java.util.ArrayList
@@ -56,8 +57,20 @@ class ClientesActivity : AppCompatActivity(), OnClickListener {
         this.btnAdicionar.setOnClickListener(this)
         this.btnPesquisarClientes.setOnClickListener(this)
 
+        // mapear evento de visualizar os dados do cliente
+        val iOnVisualizarDetalhesCliente: IOnVisualizar = object : IOnVisualizar {
+
+            override fun visualizar(idEntidade: Int) {
+                // redirecionar o cliente para a tela de detalhes
+                val intentVisualizarDetalhesCliente = Intent(applicationContext, ClienteDetalhesActivity::class.java)
+                intentVisualizarDetalhesCliente.putExtra("cliente_id", idEntidade)
+                startActivity(intentVisualizarDetalhesCliente)
+            }
+
+        }
+
         // configurar adapter / RecyclerView
-        this.clienteAdapter = ClienteAdapter(this)
+        this.clienteAdapter = ClienteAdapter(this, iOnVisualizarDetalhesCliente)
         this.recyclerClientes.layoutManager = LinearLayoutManager(this)
         this.recyclerClientes.adapter = this.clienteAdapter
 
