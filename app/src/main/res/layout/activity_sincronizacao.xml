@@ -17,8 +17,7 @@
         app:layout_constraintStart_toStartOf="@id/menu_topo_sinc"
         app:layout_constraintEnd_toEndOf="@id/menu_topo_sinc"
         app:layout_constraintTop_toBottomOf="@id/menu_topo_sinc"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" >
+        android:padding="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,13 +41,8 @@
             android:text="OK"
             android:layout_gravity="center"
             android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkbox_sinc_configuracoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 
@@ -69,8 +63,7 @@
         app:layout_constraintStart_toStartOf="@id/linear_container_sinc_configuracoes"
         app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_configuracoes"
         app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_configuracoes"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" >
+        android:padding="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,13 +87,8 @@
             android:text="OK"
             android:layout_gravity="center"
             android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkbox_sinc_clientes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 
@@ -121,8 +109,7 @@
         app:layout_constraintStart_toStartOf="@id/linear_container_sinc_clientes"
         app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_clientes"
         app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_clientes"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" >
+        android:padding="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -146,13 +133,8 @@
             android:text="OK"
             android:layout_gravity="center"
             android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkbox_sinc_produtos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 
@@ -166,20 +148,19 @@
         android:elevation="1dp" />
 
     <LinearLayout
-        android:id="@+id/linear_container_sinc_listas_preco"
+        android:id="@+id/linear_container_sinc_categorias_produtos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="@id/linear_container_sinc_produtos"
         app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_produtos"
         app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_produtos"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" >
+        android:padding="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_sinc_lista_preco"
+            android:text="@string/txt_sinc_categorias_produtos"
             android:textColor="@color/principal"
             android:textAllCaps="true"
             android:textSize="16sp"
@@ -192,19 +173,14 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/txt_status_sinc_lista_preco"
+            android:id="@+id/txt_status_sinc_categorias_produtos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="OK"
             android:layout_gravity="center"
             android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkbox_sinc_lista_preco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 
@@ -212,7 +188,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/cinza_separador_linhas"
-        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_listas_preco"
+        app:layout_constraintTop_toBottomOf="@+id/linear_container_sinc_categorias_produtos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:elevation="1dp" />
@@ -222,11 +198,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_listas_preco"
-        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_listas_preco"
-        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_listas_preco"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" >
+        app:layout_constraintStart_toStartOf="@id/linear_container_sinc_categorias_produtos"
+        app:layout_constraintEnd_toEndOf="@id/linear_container_sinc_categorias_produtos"
+        app:layout_constraintTop_toBottomOf="@id/linear_container_sinc_categorias_produtos"
+        android:padding="10dp" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -250,13 +225,8 @@
             android:text="OK"
             android:layout_gravity="center"
             android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkbox_sinc_vendas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 

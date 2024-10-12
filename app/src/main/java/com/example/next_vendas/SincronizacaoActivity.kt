@@ -33,6 +33,9 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     private lateinit var txtProgressoSincronizacao: TextView
     private lateinit var progressBarSincronizacao: ProgressBar
 
+    // opções de sincronização
+    private val opcoesSincronizarStatus: ArrayList<TextView> = arrayListOf()
+
     // controlar total de cada entidade
     private var totalClientesSincronizar: Int = 0
     private var totalProdutosSincronizar: Int = 0
@@ -53,6 +56,17 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         this.linearContainerProgresso = findViewById(R.id.linear_container_loader)
         this.txtProgressoSincronizacao = findViewById(R.id.txt_progresso_sincronizacao)
         this.progressBarSincronizacao = findViewById(R.id.progress_bar_sincronizacao)
+
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_configuracoes))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_clientes))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_categorias_produtos))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_produtos))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_vendas))
+
+        for (opcaoStatusSinc in this.opcoesSincronizarStatus) {
+            opcaoStatusSinc.text = ""
+            opcaoStatusSinc.visibility = GONE
+        }
 
         // mapear eventos
         this.btnSincronizar.setOnClickListener(this)
@@ -110,6 +124,14 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     private fun sincronizar() {
 
         try {
+            this.btnSincronizar.visibility = GONE
+
+            for (opcaoStatusSinc in this.opcoesSincronizarStatus) {
+                opcaoStatusSinc.text = "Aguarde..."
+                opcaoStatusSinc.visibility = VISIBLE
+                opcaoStatusSinc.setTextColor(getColor(android.R.color.darker_gray))
+            }
+
             // iniciar sincronizando as configurações
             this.sincronizarConfiguracoes()
         } catch (e: Exception) {
@@ -134,13 +156,21 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
             override fun terminouSincronizar() {
                 progressBarSincronizacao.progress = 100
 
+                opcoesSincronizarStatus[0].text = "OK"
+                opcoesSincronizarStatus[0].setTextColor(getColor(android.R.color.holo_green_dark))
+
                 buscarTotais()
             }
 
             override fun erro(mensagemErro: String) {
+                btnSincronizar.visibility = VISIBLE
+
                 progressBarSincronizacao.progress = 0
                 txtProgressoSincronizacao.text = ""
                 linearContainerProgresso.visibility = GONE
+
+                opcoesSincronizarStatus[0].text = "Erro"
+                opcoesSincronizarStatus[0].setTextColor(getColor(android.R.color.holo_red_dark))
 
                 Toast.makeText(applicationContext, "Erro: $mensagemErro", Toast.LENGTH_LONG)
                     .show()
@@ -172,12 +202,20 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
                 override fun terminouSincronizar() {
                     txtProgressoSincronizacao.text = ""
                     progressBarSincronizacao.progress = 100
+
+                    opcoesSincronizarStatus[1].text = "OK"
+                    opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_green_dark))
                 }
 
                 override fun erro(mensagemErro: String) {
+                    btnSincronizar.visibility = VISIBLE
+
                     txtProgressoSincronizacao.text = ""
                     progressBarSincronizacao.progress = 0
                     linearContainerProgresso.visibility = GONE
+
+                    opcoesSincronizarStatus[1].text = "OK"
+                    opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_red_dark))
                 }
 
             })
