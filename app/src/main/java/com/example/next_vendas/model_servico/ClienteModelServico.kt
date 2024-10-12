@@ -29,7 +29,7 @@ data class ClienteModelServico(
     var sexo: String = "",
     @SerializedName("inscricao_estadual")
     var inscricaoEstadual: String = "",
-    @SerializedName("link_site_empresa")
+    @SerializedName("link_site")
     var linkSiteEmpresa: String = "",
     @SerializedName("data_cadastro")
     var dataCadastro: String = "",

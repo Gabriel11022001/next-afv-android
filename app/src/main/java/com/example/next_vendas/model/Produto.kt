@@ -4,9 +4,13 @@ class Produto {
 
     var id: Int = 0
     var nome: String = ""
-    var preco: Double = 0.0
+    var precoVenda: Double = 0.0
+    var precoCompra: Double = 0.0
     var codigo: String = ""
-    var quantidadeUnidadesEstoque: Int = 0
+    var unidadesEstoque: Int = 0
     var fotoProduto: String = ""
+    var status: Boolean = true
+    var codigoBarras: String = ""
+    var categoria: CategoriaProduto? = null
 
 }

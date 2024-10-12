@@ -1,9 +1,11 @@
 package com.example.next_vendas.api
 
-import android.hardware.lights.Light
+import android.content.Context
 import android.util.Log
+import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.model.Pessoa
 import com.example.next_vendas.model_servico.ClienteModelServico
+import com.example.next_vendas.model_servico.PaginaAtualModelServico
 import com.example.next_vendas.servico.ClienteServico
 import com.example.next_vendas.servico.RespostaBase
 import com.example.next_vendas.servico.Servico
@@ -11,13 +13,15 @@ import com.example.next_vendas.utils.Constantes
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
+import kotlin.math.roundToInt
 
-class ClienteApi {
+class ClienteApi(
+
+) {
 
     companion object {
 
-        private val TOTAL_CLIENTES_POR_PAGINA: Int = 5
+        private val TOTAL_CLIENTES_POR_PAGINA: Int = 10
 
         fun cadastrarCliente(cliente: Pessoa, iOnEnviarServidor: IOnEnviarServidor) {
             val clienteModelServicoCadastrar: ClienteModelServico = ClienteModelServico()
@@ -93,8 +97,62 @@ class ClienteApi {
                 })
         }
 
-        fun sincronizarClientes(totalClientes: Int, iOnSincronizar: IOnSincronizar) {
+        fun sincronizarClientes(totalClientes: Int, clienteDAO: ClienteDAO, iOnSincronizar: IOnSincronizar) {
+            var totalRequisicoes: Double = 0.0
 
+            if (totalClientes == this.TOTAL_CLIENTES_POR_PAGINA || totalClientes < this.TOTAL_CLIENTES_POR_PAGINA) {
+                totalRequisicoes = 1.0
+            } else {
+                totalRequisicoes = totalClientes.toDouble() / this.TOTAL_CLIENTES_POR_PAGINA.toDouble()
+            }
+
+            var paginaAtual = 1
+
+            sincronizarPaginaClientes(paginaAtual, totalRequisicoes.roundToInt(), iOnSincronizar)
+        }
+
+        private fun sincronizarPaginaClientes(paginaAtual: Int, totalRequisicoes: Int, iOnSincronizar: IOnSincronizar) {
+            val clienteServico = Servico().getClienteService()
+
+            var paginaAtualModelServico = PaginaAtualModelServico(
+                paginaAtual = paginaAtual
+            )
+
+            clienteServico.listarClientes(paginaAtualModelServico).enqueue(object : Callback<RespostaBase<ArrayList<ClienteModelServico>>> {
+
+                override fun onResponse(
+                    call: Call<RespostaBase<ArrayList<ClienteModelServico>>>,
+                    response: Response<RespostaBase<ArrayList<ClienteModelServico>>>
+                ) {
+                    Log.d("sinc_clientes", "Sincronizando clientes, pagina: $paginaAtual")
+
+                    if (response.isSuccessful) {
+
+                        if (response.body()!!.corpo.isEmpty()) {
+                            iOnSincronizar.terminouSincronizar()
+                        } else {
+                            sincronizarPaginaClientes(paginaAtual + 1, totalRequisicoes, iOnSincronizar)
+                            iOnSincronizar.sincronizando()
+                        }
+
+                    } else {
+                        Log.e("erro_sinc_clientes", "Ocorreu um erro na sinc de clientes.")
+
+                        iOnSincronizar.erro("Ocorreu um erro na sinc de clientes.")
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<RespostaBase<ArrayList<ClienteModelServico>>>,
+                    t: Throwable
+                ) {
+                    Log.e("erro_sinc_clientes", t.message.toString())
+
+                    iOnSincronizar.erro(t.message.toString())
+                }
+
+            })
         }
 
     }

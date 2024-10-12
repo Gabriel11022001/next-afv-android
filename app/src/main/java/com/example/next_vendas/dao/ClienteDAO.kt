@@ -99,6 +99,7 @@ class ClienteDAO(contexto: Context): BaseDAO(contexto) {
 
             while (cursor.moveToNext()) {
                 val cliente: Pessoa = Pessoa()
+                cliente.id = cursor.getInt(cursor.getColumnIndex("id"))
                 cliente.tipoPessoa = cursor.getString(cursor.getColumnIndex("tipo_pessoa"))
                 cliente.email = cursor.getString(cursor.getColumnIndex("email"))
 

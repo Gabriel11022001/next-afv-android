@@ -5,14 +5,23 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.next_vendas.api.ClienteApi
 import com.example.next_vendas.api.ConfiguracaoApi
+import com.example.next_vendas.api.IOnObterTotais
 import com.example.next_vendas.api.IOnSincronizar
+import com.example.next_vendas.api.TotalEntidadesApi
+import com.example.next_vendas.dao.ClienteDAO
+import com.example.next_vendas.model_servico.TotalModelServico
 
 class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
@@ -20,13 +29,18 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     private lateinit var btnAdicionar: ImageButton
     private lateinit var btnFiltro: ImageButton
     private lateinit var btnSincronizar: AppCompatButton
+    private lateinit var linearContainerProgresso: LinearLayout
+    private lateinit var txtProgressoSincronizacao: TextView
+    private lateinit var progressBarSincronizacao: ProgressBar
+
+    // opções de sincronização
+    private val opcoesSincronizarStatus: ArrayList<TextView> = arrayListOf()
 
     // controlar total de cada entidade
-    private var totalClientes: Int = 0
-    private var totalProdutos: Int = 0
-    private var totalCategoriasProdutos: Int = 0
-    private var totalVendas: Int = 0
-    private var totalListasPreco: Int = 0
+    private var totalClientesSincronizar: Int = 0
+    private var totalProdutosSincronizar: Int = 0
+    private var totalCategoriasProdutosSincronizar: Int = 0
+    private var totalVendasSincronizar: Int = 0
 
     private lateinit var sharedPreferencesConfiguracoes: SharedPreferences
 
@@ -39,6 +53,20 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         this.btnFiltro = findViewById(R.id.btn_filtro_menu)
         this.txtTitulo = findViewById(R.id.txt_titulo)
         this.btnSincronizar = findViewById(R.id.btn_sincronizar)
+        this.linearContainerProgresso = findViewById(R.id.linear_container_loader)
+        this.txtProgressoSincronizacao = findViewById(R.id.txt_progresso_sincronizacao)
+        this.progressBarSincronizacao = findViewById(R.id.progress_bar_sincronizacao)
+
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_configuracoes))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_clientes))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_categorias_produtos))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_produtos))
+        this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_vendas))
+
+        for (opcaoStatusSinc in this.opcoesSincronizarStatus) {
+            opcaoStatusSinc.text = ""
+            opcaoStatusSinc.visibility = GONE
+        }
 
         // mapear eventos
         this.btnSincronizar.setOnClickListener(this)
@@ -48,38 +76,71 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         this.btnFiltro.visibility = View.GONE
 
         this.sharedPreferencesConfiguracoes = getSharedPreferences("CONFIGURACOES", MODE_PRIVATE)
+
+        this.linearContainerProgresso.visibility = GONE
+        this.txtProgressoSincronizacao.text = ""
+        this.progressBarSincronizacao.max = 100
     }
 
-    private fun buscarTotal(entidade: String) {
+    private fun buscarTotais() {
+        val totalEntidadesApi = TotalEntidadesApi()
 
-        if (entidade == "clientes") {
+        totalEntidadesApi.getTotais(object : IOnObterTotais {
 
-        } else if (entidade == "produtos") {
+            override fun sincronizando() {
+                txtProgressoSincronizacao.text = "Obtendo totais..."
+                progressBarSincronizacao.progress = 0
+            }
 
-        } else if (entidade == "vendas") {
+            override fun terminouObterTotais(
+                totalClientes: Int,
+                totalCategorias: Int,
+                totalProdutos: Int,
+                totalVendas: Int
+            ) {
+                txtProgressoSincronizacao.text = ""
+                progressBarSincronizacao.progress = 100
 
-        } else if (entidade == "listas_preco") {
+                totalClientesSincronizar = totalClientes
+                totalCategoriasProdutosSincronizar = totalCategorias
+                totalProdutosSincronizar = totalProdutos
+                totalVendasSincronizar = totalVendas
 
-        } else if (entidade == "categorias_produtos") {
+                Log.d("total_clientes", totalClientes.toString())
 
-        }
+                // sincronizar os clientes
+                sincronizarClientes()
+            }
 
+            override fun erro(mensagem: String) {
+                linearContainerProgresso.visibility = GONE
+                txtProgressoSincronizacao.text = ""
+                progressBarSincronizacao.progress = 0
+            }
+
+        })
     }
 
     private fun sincronizar() {
 
         try {
+            this.btnSincronizar.visibility = GONE
+
+            for (opcaoStatusSinc in this.opcoesSincronizarStatus) {
+                opcaoStatusSinc.text = "Aguarde..."
+                opcaoStatusSinc.visibility = VISIBLE
+                opcaoStatusSinc.setTextColor(getColor(android.R.color.darker_gray))
+            }
+
             // iniciar sincronizando as configurações
             this.sincronizarConfiguracoes()
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
         } catch (e: Exception) {
             Log.e("erro_sincronizacao", "Erro na sincronização: ${ e.message.toString() }")
         }
 
     }
 
-    // de configurações -> para clientes
+    // de configurações -> buscar os totais
     private fun sincronizarConfiguracoes() {
         val configuracaoApi: ConfiguracaoApi = ConfiguracaoApi(
             this.sharedPreferencesConfiguracoes
@@ -87,15 +148,30 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         configuracaoApi.sincronizarConfiguracoes(object : IOnSincronizar {
 
             override fun sincronizando() {
-                Log.d("sincronizar_configuracoes", "Sincronizando configurações...")
+                linearContainerProgresso.visibility = VISIBLE
+                txtProgressoSincronizacao.text = "Sincronizando as configurações..."
+                progressBarSincronizacao.progress = 0
             }
 
             override fun terminouSincronizar() {
-                Log.d("sincronizar_configuracoes", "Terminou de sincronizar configurações...")
+                progressBarSincronizacao.progress = 100
+
+                opcoesSincronizarStatus[0].text = "OK"
+                opcoesSincronizarStatus[0].setTextColor(getColor(android.R.color.holo_green_dark))
+
+                buscarTotais()
             }
 
             override fun erro(mensagemErro: String) {
-                Log.e("sincronizar_configuracoes", mensagemErro)
+                btnSincronizar.visibility = VISIBLE
+
+                progressBarSincronizacao.progress = 0
+                txtProgressoSincronizacao.text = ""
+                linearContainerProgresso.visibility = GONE
+
+                opcoesSincronizarStatus[0].text = "Erro"
+                opcoesSincronizarStatus[0].setTextColor(getColor(android.R.color.holo_red_dark))
+
                 Toast.makeText(applicationContext, "Erro: $mensagemErro", Toast.LENGTH_LONG)
                     .show()
             }
@@ -106,6 +182,49 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     // de clientes -> para categorias de produtos
     private fun sincronizarClientes() {
 
+        try {
+            progressBarSincronizacao.progress = 0
+            txtProgressoSincronizacao.text = "Sincronizando os clientes..."
+
+            val clienteDAO = ClienteDAO(this)
+
+            ClienteApi.sincronizarClientes(this.totalClientesSincronizar, clienteDAO, object : IOnSincronizar {
+
+                override fun sincronizando() {
+                    val progressoAtual = progressBarSincronizacao.progress
+
+                    if (progressoAtual < 95) {
+                        progressBarSincronizacao.progress = progressoAtual + 1
+                    }
+
+                }
+
+                override fun terminouSincronizar() {
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 100
+
+                    opcoesSincronizarStatus[1].text = "OK"
+                    opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_green_dark))
+                }
+
+                override fun erro(mensagemErro: String) {
+                    btnSincronizar.visibility = VISIBLE
+
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 0
+                    linearContainerProgresso.visibility = GONE
+
+                    opcoesSincronizarStatus[1].text = "OK"
+                    opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_red_dark))
+                }
+
+            })
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Erro sincronizar clientes: ${e.message.toString()}", Toast.LENGTH_LONG)
+                .show()
+        }
+
     }
 
     // de categorias de produtos -> para produtos
@@ -113,13 +232,8 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
     }
 
-    // de produtos -> para listas de preço
+    // de produtos -> para vendas
     private fun sincronizarProdutos() {
-
-    }
-
-    // de listas de preço -> para vendas
-    private fun sincronizarListasPreco() {
 
     }
 
@@ -131,8 +245,6 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(p0: View?) {
 
         if (p0!!.id == R.id.btn_sincronizar) {
-            // startActivity(Intent(this, HomeActivity::class.java))
-            // finish()
             this.sincronizar()
         }
 

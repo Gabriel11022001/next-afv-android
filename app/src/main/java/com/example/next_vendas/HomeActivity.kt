@@ -7,12 +7,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.next_vendas.listener.IOnConfirmarListener
 import com.example.next_vendas.utils.AlertaConfirmarVoltar
-import java.lang.Exception
 
 class HomeActivity : AppCompatActivity(), OnClickListener {
 

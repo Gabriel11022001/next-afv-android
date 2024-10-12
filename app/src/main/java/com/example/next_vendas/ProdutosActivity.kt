@@ -65,7 +65,7 @@ class ProdutosActivity : AppCompatActivity(), OnClickListener {
         this.listarProdutos()
     }
 
-    fun listarProdutos() {
+    private fun listarProdutos() {
 
         try {
             val produtos = this.produtoDAO.listarProdutos()

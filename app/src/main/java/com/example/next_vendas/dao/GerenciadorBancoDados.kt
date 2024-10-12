@@ -56,15 +56,18 @@ open class GerenciadorBancoDados(contexto: Context): SQLiteOpenHelper(
         bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_categorias_produtos(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "descricao TEXT NOT NULL," +
-                "status TEXT NOT NULL)")
+                "status TEXT NOT NULL," +
+                "id_produto_api INTEGER NOT NULL)")
         // criar tabela de produtos
         bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_produtos(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome_produto TEXT NOT NULL," +
-                "preco DECIMAL NOT NULL," +
+                "preco_venda DECIMAL NOT NULL," +
+                "preco_compra DECIMAL NOT NULL," +
                 "unidades_estoque INTEGER NOT NULL," +
                 "foto TEXT," +
                 "codigo TEXT NOT NULL," +
+                "codigo_barras TEXT NOT NULL," +
                 "categoria_id INTEGER NOT NULL," +
                 "FOREIGN KEY(categoria_id) REFERENCES tb_categorias_produtos(id))")
     }
