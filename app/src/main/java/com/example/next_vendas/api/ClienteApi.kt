@@ -100,7 +100,7 @@ class ClienteApi(
         fun sincronizarClientes(totalClientes: Int, clienteDAO: ClienteDAO, iOnSincronizar: IOnSincronizar) {
             var totalRequisicoes: Double = 0.0
 
-            if (totalClientes == this.TOTAL_CLIENTES_POR_PAGINA || totalClientes < this.TOTAL_CLIENTES_POR_PAGINA) {
+            if (totalClientes <= this.TOTAL_CLIENTES_POR_PAGINA) {
                 totalRequisicoes = 1.0
             } else {
                 totalRequisicoes = totalClientes.toDouble() / this.TOTAL_CLIENTES_POR_PAGINA.toDouble()
@@ -108,10 +108,10 @@ class ClienteApi(
 
             var paginaAtual = 1
 
-            sincronizarPaginaClientes(paginaAtual, totalRequisicoes.roundToInt(), iOnSincronizar)
+            sincronizarPaginaClientes(paginaAtual, totalRequisicoes.roundToInt(), iOnSincronizar, clienteDAO)
         }
 
-        private fun sincronizarPaginaClientes(paginaAtual: Int, totalRequisicoes: Int, iOnSincronizar: IOnSincronizar) {
+        private fun sincronizarPaginaClientes(paginaAtual: Int, totalRequisicoes: Int, iOnSincronizar: IOnSincronizar, clienteDAO: ClienteDAO) {
             val clienteServico = Servico().getClienteService()
 
             var paginaAtualModelServico = PaginaAtualModelServico(
@@ -124,14 +124,19 @@ class ClienteApi(
                     call: Call<RespostaBase<ArrayList<ClienteModelServico>>>,
                     response: Response<RespostaBase<ArrayList<ClienteModelServico>>>
                 ) {
-                    Log.d("sinc_clientes", "Sincronizando clientes, pagina: $paginaAtual")
 
                     if (response.isSuccessful) {
 
-                        if (response.body()!!.corpo.isEmpty()) {
+                        if (response.body()!!.corpo.isEmpty() || paginaAtual == totalRequisicoes) {
+                            Log.d("sinc_clientes", "Terminou de sincronizar os clientes.")
+
                             iOnSincronizar.terminouSincronizar()
                         } else {
-                            sincronizarPaginaClientes(paginaAtual + 1, totalRequisicoes, iOnSincronizar)
+                            Log.d("sinc_clientes", "Sincronizando clientes, pagina: $paginaAtual")
+
+                            // salvar clientes na base local do app
+
+                            sincronizarPaginaClientes(paginaAtual + 1, totalRequisicoes, iOnSincronizar, clienteDAO)
                             iOnSincronizar.sincronizando()
                         }
 

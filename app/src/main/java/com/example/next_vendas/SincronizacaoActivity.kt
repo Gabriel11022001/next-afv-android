@@ -15,12 +15,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.next_vendas.api.CategoriaProdutoApi
 import com.example.next_vendas.api.ClienteApi
 import com.example.next_vendas.api.ConfiguracaoApi
 import com.example.next_vendas.api.IOnObterTotais
 import com.example.next_vendas.api.IOnSincronizar
+import com.example.next_vendas.api.ProdutoApi
 import com.example.next_vendas.api.TotalEntidadesApi
 import com.example.next_vendas.dao.ClienteDAO
+import com.example.next_vendas.dao.ProdutoDAO
 import com.example.next_vendas.model_servico.TotalModelServico
 
 class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
@@ -205,6 +208,9 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
                     opcoesSincronizarStatus[1].text = "OK"
                     opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_green_dark))
+
+                    // sincronizar as categorias de produto
+                    sincronizarCategoriasProdutos()
                 }
 
                 override fun erro(mensagemErro: String) {
@@ -214,7 +220,7 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
                     progressBarSincronizacao.progress = 0
                     linearContainerProgresso.visibility = GONE
 
-                    opcoesSincronizarStatus[1].text = "OK"
+                    opcoesSincronizarStatus[1].text = "Erro"
                     opcoesSincronizarStatus[1].setTextColor(getColor(android.R.color.holo_red_dark))
                 }
 
@@ -230,10 +236,104 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     // de categorias de produtos -> para produtos
     private fun sincronizarCategoriasProdutos() {
 
+        try {
+            progressBarSincronizacao.progress = 0
+            txtProgressoSincronizacao.text = "Sincronizando as categorias de produto..."
+
+            val categoriaProdutoApi: CategoriaProdutoApi = CategoriaProdutoApi()
+
+            categoriaProdutoApi.sincronizarCategoriasProdutos(this.totalCategoriasProdutosSincronizar, object : IOnSincronizar {
+
+                override fun sincronizando() {
+                    val progressoAtual = progressBarSincronizacao.progress
+
+                    if (progressoAtual < 95) {
+                        progressBarSincronizacao.progress = progressoAtual + 2
+                    }
+
+                }
+
+                override fun terminouSincronizar() {
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 100
+
+                    opcoesSincronizarStatus[2].text = "OK"
+                    opcoesSincronizarStatus[2].setTextColor(getColor(android.R.color.holo_green_dark))
+
+                    // sincronizar os produtos
+                    sincronizarProdutos()
+                }
+
+                override fun erro(mensagemErro: String) {
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 0
+                    linearContainerProgresso.visibility = GONE
+
+                    btnSincronizar.visibility = VISIBLE
+
+                    opcoesSincronizarStatus[2].text = "Erro"
+                    opcoesSincronizarStatus[2].setTextColor(getColor(android.R.color.holo_red_dark))
+                }
+
+            })
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Erro sincronizar categorias de produtos: ${ e.message.toString() }", Toast.LENGTH_LONG)
+                .show()
+        }
+
     }
 
     // de produtos -> para vendas
     private fun sincronizarProdutos() {
+
+        try {
+            progressBarSincronizacao.progress = 0
+            txtProgressoSincronizacao.text = "Sincronizando os produtos..."
+
+            val produtoApi = ProdutoApi()
+
+            val listenerSincronizarProdutos = object : IOnSincronizar {
+
+                override fun sincronizando() {
+                    val progressoAtual = progressBarSincronizacao.progress
+
+                    if (progressoAtual < 95) {
+                        progressBarSincronizacao.progress = progressoAtual + 2
+                    }
+
+                }
+
+                override fun terminouSincronizar() {
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 100
+
+                    opcoesSincronizarStatus[3].text = "OK"
+                    opcoesSincronizarStatus[3].setTextColor(getColor(android.R.color.holo_green_dark))
+
+                    // sincronizar as vendas
+                    sincronizarVendas()
+                }
+
+                override fun erro(mensagemErro: String) {
+                    txtProgressoSincronizacao.text = ""
+                    progressBarSincronizacao.progress = 0
+                    linearContainerProgresso.visibility = GONE
+                    btnSincronizar.visibility = VISIBLE
+
+                    opcoesSincronizarStatus[3].text = "Erro"
+                    opcoesSincronizarStatus[3].setTextColor(getColor(android.R.color.holo_red_dark))
+                }
+
+            }
+
+            val produtoDAO = ProdutoDAO(this)
+
+            produtoApi.sincronizarProdutos(this.totalProdutosSincronizar, produtoDAO, listenerSincronizarProdutos)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Erro na sicronização de produtos: ${ e.message.toString() }", Toast.LENGTH_LONG)
+                .show()
+        }
 
     }
 

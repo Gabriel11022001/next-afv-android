@@ -25,7 +25,7 @@ class ProdutoDAO(contexto: Context): BaseDAO(contexto) {
                 produto.nome = cursor.getString(cursor.getColumnIndex("nome_produto"))
                 produto.precoVenda = cursor.getDouble(cursor.getColumnIndex("preco_venda"))
                 produto.precoCompra = cursor.getDouble(cursor.getColumnIndex("preco_compra"))
-                produto.status = cursor.getInt(cursor.getColumnIndex("status"))
+                produto.status = if (cursor.getInt(cursor.getColumnIndex("status")) == 1) true else false
                 produto.unidadesEstoque = cursor.getInt(cursor.getColumnIndex("unidades_estoque"))
                 produto.fotoProduto = cursor.getString(cursor.getColumnIndex("foto"))
                 produto.codigo = cursor.getString(cursor.getColumnIndex("codigo"))
