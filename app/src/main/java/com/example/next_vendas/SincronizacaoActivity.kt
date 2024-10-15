@@ -1,6 +1,5 @@
 package com.example.next_vendas
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -22,9 +21,9 @@ import com.example.next_vendas.api.IOnObterTotais
 import com.example.next_vendas.api.IOnSincronizar
 import com.example.next_vendas.api.ProdutoApi
 import com.example.next_vendas.api.TotalEntidadesApi
+import com.example.next_vendas.dao.CategoriaProdutoDAO
 import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.dao.ProdutoDAO
-import com.example.next_vendas.model_servico.TotalModelServico
 
 class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
@@ -241,8 +240,9 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
             txtProgressoSincronizacao.text = "Sincronizando as categorias de produto..."
 
             val categoriaProdutoApi: CategoriaProdutoApi = CategoriaProdutoApi()
+            val categoriaProdutoDAO = CategoriaProdutoDAO(this)
 
-            categoriaProdutoApi.sincronizarCategoriasProdutos(this.totalCategoriasProdutosSincronizar, object : IOnSincronizar {
+            categoriaProdutoApi.sincronizarCategoriasProdutos(this.totalCategoriasProdutosSincronizar, categoriaProdutoDAO, object : IOnSincronizar {
 
                 override fun sincronizando() {
                     val progressoAtual = progressBarSincronizacao.progress

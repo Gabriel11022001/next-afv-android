@@ -1,6 +1,8 @@
 package com.example.next_vendas.api
 
 import android.util.Log
+import com.example.next_vendas.dao.CategoriaProdutoDAO
+import com.example.next_vendas.model.CategoriaProduto
 import com.example.next_vendas.model_servico.CategoriaProdutoModelServico
 import com.example.next_vendas.model_servico.PaginaAtualModelServico
 import com.example.next_vendas.servico.RespostaBase
@@ -12,7 +14,7 @@ import kotlin.math.roundToInt
 
 class CategoriaProdutoApi {
 
-    fun sincronizarCategoriasProdutos(totalCategoriasProdutos: Int, iOnSincronizar: IOnSincronizar) {
+    fun sincronizarCategoriasProdutos(totalCategoriasProdutos: Int, categoriaProdutoDAO: CategoriaProdutoDAO, iOnSincronizar: IOnSincronizar) {
         var totalRequisicoes: Double = 0.0
         var totalCategoriasPorPagina: Double = 10.0
 
@@ -25,10 +27,10 @@ class CategoriaProdutoApi {
         var paginaAtual = 1
 
         // sincronizar página por página as categorias de produto
-        sincronizarCategoriaProdutoPagina(paginaAtual, totalRequisicoes.roundToInt(), iOnSincronizar)
+        sincronizarCategoriaProdutoPagina(paginaAtual, totalRequisicoes.roundToInt(), categoriaProdutoDAO, iOnSincronizar)
     }
 
-    private fun sincronizarCategoriaProdutoPagina(paginaAtual: Int, totalRequisicoes: Int, iOnSincronizar: IOnSincronizar) {
+    private fun sincronizarCategoriaProdutoPagina(paginaAtual: Int, totalRequisicoes: Int, categoriaProdutoDAO: CategoriaProdutoDAO, iOnSincronizar: IOnSincronizar) {
         val categoriaProdutoServico = Servico().getCategoriaProdutoServico()
 
         val paginaAtualModelServico = PaginaAtualModelServico(
@@ -49,6 +51,19 @@ class CategoriaProdutoApi {
                             iOnSincronizar.terminouSincronizar()
                         } else {
                             // salvar as categorias de produtos na base local do app
+                            val categoriasSinc = response.body()!!.corpo
+                            
+                            categoriasSinc.forEach { categoriaProdutoModelServico ->
+                                val categoriaProdutoSalvar = CategoriaProduto(
+                                    idCategoriaApi = categoriaProdutoModelServico.id,
+                                    descricao = categoriaProdutoModelServico.descricao,
+                                    status = categoriaProdutoModelServico.status
+                                )
+
+                                val idCategoria = categoriaProdutoDAO.cadastrarCategoriaProduto(categoriaProdutoSalvar)
+
+                                Log.d("id_categoria_produto", "categoria $idCategoria cadastrada com sucesso.")
+                            }
 
                             Log.d("sinc_categorias", "Sincronizando as categorias de produtos, pagina atual: $paginaAtual")
 
@@ -59,6 +74,7 @@ class CategoriaProdutoApi {
                             sincronizarCategoriaProdutoPagina(
                                 novaPagina,
                                 totalRequisicoes,
+                                categoriaProdutoDAO,
                                 iOnSincronizar
                             )
                         }

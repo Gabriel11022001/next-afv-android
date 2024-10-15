@@ -1,12 +1,13 @@
 package com.example.next_vendas.dao
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import com.example.next_vendas.model.CategoriaProduto
 import com.example.next_vendas.model.Produto
 import java.util.ArrayList
 
-class ProdutoDAO(contexto: Context): BaseDAO(contexto) {
+class ProdutoDAO(val contexto: Context): BaseDAO(contexto) {
 
     fun listarProdutos(): ArrayList<Produto> {
         val produtos: ArrayList<Produto> = arrayListOf()
@@ -55,6 +56,56 @@ class ProdutoDAO(contexto: Context): BaseDAO(contexto) {
     fun filtrarProdutosPeloNome(nome: String): ArrayList<Produto> {
 
         return arrayListOf()
+    }
+
+    fun cadastrarProduto(produto: Produto): Int {
+        var idProduto = this.getIdProdutoPeloCodigo(produto.codigo)
+        val contentValuesProduto = ContentValues()
+
+        if (idProduto != 0) {
+            contentValuesProduto.put("id", idProduto)
+        }
+
+        contentValuesProduto.put("nome_produto", produto.nome)
+        contentValuesProduto.put("preco_venda", produto.precoVenda)
+        contentValuesProduto.put("preco_compra", produto.precoCompra)
+        contentValuesProduto.put("status", produto.status)
+        contentValuesProduto.put("unidades_estoque", produto.unidadesEstoque)
+        contentValuesProduto.put("foto", produto.fotoProduto)
+        contentValuesProduto.put("codigo", produto.codigo)
+        contentValuesProduto.put("codigo_barras", produto.codigoBarras)
+
+        val categoriaProdutoIdApi = produto.categoria!!.idCategoriaApi
+        // buscar o id da categoria pelo id_categoria_api
+        val categoriaProdutoDAO = CategoriaProdutoDAO(contexto = this.contexto)
+
+        contentValuesProduto.put("categoria_id", categoriaProdutoDAO.getIdCategoriaPeloIdCategoriaApi(categoriaProdutoIdApi))
+
+        if (produto.id != 0) {
+            // atualizar o produto
+            super.bancoDados.update("tb_produtos", contentValuesProduto, "id = ?", arrayOf(produto.id.toString()))
+        } else {
+            // cadastrar o produto na base de dados
+            idProduto = super.bancoDados.insertOrThrow("tb_produtos", null, contentValuesProduto).toInt()
+        }
+
+        return idProduto
+    }
+
+    private fun getIdProdutoPeloCodigo(codigoProduto: String): Int {
+        var idProduto = 0
+        val cursor = super.bancoDados.rawQuery("SELECT id FROM tb_produtos WHERE codigo = ?", arrayOf(codigoProduto))
+
+        if (cursor != null) {
+
+            if (cursor.moveToFirst()) {
+                idProduto = cursor.getInt(cursor.getColumnIndex("id"))
+            }
+
+            cursor.close()
+        }
+
+        return idProduto
     }
 
 }

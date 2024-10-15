@@ -1,6 +1,5 @@
 package com.example.next_vendas.api
 
-import android.content.Context
 import android.util.Log
 import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.model.Pessoa

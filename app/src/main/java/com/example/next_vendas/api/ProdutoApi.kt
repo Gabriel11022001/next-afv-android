@@ -2,6 +2,8 @@ package com.example.next_vendas.api
 
 import android.util.Log
 import com.example.next_vendas.dao.ProdutoDAO
+import com.example.next_vendas.model.CategoriaProduto
+import com.example.next_vendas.model.Produto
 import com.example.next_vendas.model_servico.PaginaAtualModelServico
 import com.example.next_vendas.model_servico.ProdutoModelServico
 import com.example.next_vendas.servico.RespostaBase
@@ -48,6 +50,25 @@ class ProdutoApi {
                             Log.d("sinc_produtos", "sincronizando os produtos, página atual: $paginaAtual")
 
                             // salvar os produtos na base local do app
+                            val produtosSinc = response.body()!!.corpo
+
+                            produtosSinc.forEach { produtoModelServico ->
+                                val produtoSalvar = Produto()
+                                produtoSalvar.nome = produtoModelServico.nomeProduto
+                                produtoSalvar.fotoProduto = produtoModelServico.urlFoto
+                                produtoSalvar.codigo = produtoModelServico.codigo
+                                produtoSalvar.codigoBarras = produtoModelServico.codigoBarras
+                                produtoSalvar.precoVenda = produtoModelServico.precoVenda
+                                produtoSalvar.precoCompra = produtoModelServico.precoCompra
+                                produtoSalvar.status = produtoModelServico.status
+                                produtoSalvar.unidadesEstoque = produtoModelServico.unidadesEstoque.toInt()
+                                produtoSalvar.categoria = CategoriaProduto(
+                                    idCategoriaApi = produtoModelServico.categoriaId
+                                )
+
+                                val idProduto = produtoDAO.cadastrarProduto(produtoSalvar)
+                                Log.d("produto_cadastrado", "produto $idProduto cadastrado com sucesso na base local do app.")
+                            }
 
                             iOnSincronizar.sincronizando()
 
