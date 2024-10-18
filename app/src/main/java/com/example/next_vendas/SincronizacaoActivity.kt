@@ -1,5 +1,6 @@
 package com.example.next_vendas
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -339,7 +340,8 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
     // terminou a sincronização na sinc de vendas
     private fun sincronizarVendas() {
-
+        startActivity(Intent(this, PerfilActivity::class.java))
+        finish()
     }
 
     override fun onClick(p0: View?) {

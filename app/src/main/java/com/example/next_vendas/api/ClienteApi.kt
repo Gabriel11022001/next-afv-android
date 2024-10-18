@@ -134,6 +134,12 @@ class ClienteApi(
                             Log.d("sinc_clientes", "Sincronizando clientes, pagina: $paginaAtual")
 
                             // salvar clientes na base local do app
+                            val clientesSincronizados = response.body()!!.corpo
+                            
+                            clientesSincronizados.forEach { clienteModelServico ->
+                                val clienteSalvar = Pessoa()
+                                clienteSalvar.tipoPessoa = clienteModelServico.tipoPessoa
+                            }
 
                             sincronizarPaginaClientes(paginaAtual + 1, totalRequisicoes, iOnSincronizar, clienteDAO)
                             iOnSincronizar.sincronizando()

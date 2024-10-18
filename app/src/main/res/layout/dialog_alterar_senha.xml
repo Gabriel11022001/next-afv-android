@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza_fundo_telas"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/principal"
+        android:padding="20dp"
+        android:elevation="3dp"
+        android:orientation="horizontal"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alterar senha"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <!-- campo da senha atual -->
+    <EditText
+        android:id="@+id/edt_senha_atual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="Digite sua senha atual..."
+        android:textColor="@color/principal"
+        android:textStyle="bold"
+        android:inputType="numberPassword" />
+
+    <!-- campo da nova senha -->
+    <EditText
+        android:id="@+id/edt_alterar_senha_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="Digite a nova senha..."
+        android:textColor="@color/principal"
+        android:textStyle="bold"
+        android:inputType="numberPassword" />
+
+    <!-- loader que será apresentado durante o processo de alteração de senha -->
+    <LinearLayout
+        android:id="@+id/loader_alterar_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:gravity="center" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alterando a senha, aguarde..."
+            android:textColor="@color/principal"
+            android:textStyle="bold|italic" />
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/principal" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_efetivar_alterar_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alterar senha"
+        android:background="@drawable/estilo_btn_padrao"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:elevation="3dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_ok_efetivou_alteracao_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:background="@drawable/estilo_btn_padrao"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:elevation="3dp"
+        android:visibility="gone" />
+
+</LinearLayout>

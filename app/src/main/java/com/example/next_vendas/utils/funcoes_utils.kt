@@ -2,6 +2,7 @@ package com.example.next_vendas.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.next_vendas.model_servico.ConfiguracaoModelServico
 import com.example.next_vendas.model_servico.UsuarioModelServico
 import com.google.gson.JsonObject
@@ -63,9 +64,9 @@ fun salvarDadosUsuarioLogadoPreferenciasCompartilhadas(
     editor.putString("nivel_acesso_usuario_logado", nivelAcesso)
     editor.putString("ambiente", ambiente)
 
-    editor.apply()
+    editor.commit()
 
-    println("Salvou os dados do usuário logado nas preferências compartilhadas.")
+    Log.d("resultado_login", "Os dados do usuário logado foram salvos com sucesso nas preferências compartilhadas.")
 }
 
 fun salvarConfiguracoesPreferenciasCompartilhadas(

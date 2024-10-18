@@ -81,7 +81,7 @@ class ProdutoDAO(val contexto: Context): BaseDAO(contexto) {
 
         contentValuesProduto.put("categoria_id", categoriaProdutoDAO.getIdCategoriaPeloIdCategoriaApi(categoriaProdutoIdApi))
 
-        if (produto.id != 0) {
+        if (idProduto != 0) {
             // atualizar o produto
             super.bancoDados.update("tb_produtos", contentValuesProduto, "id = ?", arrayOf(produto.id.toString()))
         } else {
