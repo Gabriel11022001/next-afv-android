@@ -73,4 +73,5 @@
     <string name="txt_nao_existem_clientes_cadastrados">Não existem clientes cadastrados.</string>
     <string name="txt_nao_informado">----- Não informado -----</string>
     <string name="txt_sinc_categorias_produtos">Categorias de produtos</string>
+    <string name="txt_card_realizar_venda">Realizar venda</string>
 </resources>

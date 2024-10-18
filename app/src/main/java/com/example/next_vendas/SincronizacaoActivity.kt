@@ -340,7 +340,7 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
     // terminou a sincronização na sinc de vendas
     private fun sincronizarVendas() {
-        startActivity(Intent(this, PerfilActivity::class.java))
+        startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 

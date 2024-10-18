@@ -7,6 +7,8 @@
     android:background="@color/cinza_fundo_telas"
     android:orientation="vertical" >
 
+    <include layout="@layout/menu_topo" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -21,6 +21,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
     private lateinit var btnVoltar: ImageButton
     private lateinit var cardGestaoClientes: ConstraintLayout
     private lateinit var cardGestaoProdutos: ConstraintLayout
+    private lateinit var cardRealizarVenda: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +34,13 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         this.txtTitulo = findViewById(R.id.txt_titulo)
         this.cardGestaoClientes = findViewById(R.id.constraint_card_gestao_clientes)
         this.cardGestaoProdutos = findViewById(R.id.constraint_card_gestao_produtos)
+        this.cardRealizarVenda = findViewById(R.id.constraint_card_realizar_venda)
 
         // mapear eventos
         this.btnVoltar.setOnClickListener(this)
         this.cardGestaoClientes.setOnClickListener(this)
         this.cardGestaoProdutos.setOnClickListener(this)
+        this.cardRealizarVenda.setOnClickListener(this)
 
         this.btnFiltro.visibility = View.GONE
         this.btnAdicionar.visibility = View.GONE
@@ -76,6 +79,8 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             startActivity(Intent(this, ClientesActivity::class.java))
         } else if (tela == "gestao_produtos") {
             startActivity(Intent(this, ProdutosActivity::class.java))
+        } else if (tela == "realizar_venda") {
+            startActivity(Intent(this, VendaActivity::class.java))
         }
 
     }
@@ -88,6 +93,8 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             this.redirecionar("gestao_clientes")
         } else if (p0!!.id == R.id.constraint_card_gestao_produtos) {
             this.redirecionar("gestao_produtos")
+        } else if (p0!!.id == R.id.constraint_card_realizar_venda) {
+            this.redirecionar("realizar_venda")
         }
 
     }
