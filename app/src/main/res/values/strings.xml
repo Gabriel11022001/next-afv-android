@@ -74,4 +74,6 @@
     <string name="txt_nao_informado">----- Não informado -----</string>
     <string name="txt_sinc_categorias_produtos">Categorias de produtos</string>
     <string name="txt_card_realizar_venda">Realizar venda</string>
+    <string name="txt_menu_logout">Logout</string>
+    <string name="txt_menu_sobre">Sobre</string>
 </resources>

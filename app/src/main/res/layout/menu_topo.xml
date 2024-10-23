@@ -60,4 +60,15 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp" />
 
+    <ImageButton
+        android:id="@+id/btn_menu_opcoes"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/estilo_btn_menu"
+        android:padding="10dp"
+        android:elevation="4dp"
+        android:src="@drawable/ic_menu_cabecalho" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

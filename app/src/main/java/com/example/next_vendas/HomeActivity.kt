@@ -3,6 +3,7 @@ package com.example.next_vendas
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ImageButton
@@ -11,14 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.next_vendas.listener.IOnConfirmarListener
 import com.example.next_vendas.utils.AlertaConfirmarVoltar
+import com.example.next_vendas.utils.MenuOpcoesCabecalho
 
 class HomeActivity : AppCompatActivity(), OnClickListener {
 
+    private lateinit var menuOpcoesCabecalho: MenuOpcoesCabecalho
     private lateinit var alertaRetornar: AlertaConfirmarVoltar
     private lateinit var txtTitulo: TextView
     private lateinit var btnAdicionar: ImageButton
     private lateinit var btnFiltro: ImageButton
     private lateinit var btnVoltar: ImageButton
+    private lateinit var btnMenuCabecalho: ImageButton
     private lateinit var cardGestaoClientes: ConstraintLayout
     private lateinit var cardGestaoProdutos: ConstraintLayout
     private lateinit var cardRealizarVenda: ConstraintLayout
@@ -32,6 +36,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         this.btnAdicionar = findViewById(R.id.btn_adicionar_menu)
         this.btnVoltar = findViewById(R.id.btn_retornar)
         this.txtTitulo = findViewById(R.id.txt_titulo)
+        this.btnMenuCabecalho = findViewById(R.id.btn_menu_opcoes)
         this.cardGestaoClientes = findViewById(R.id.constraint_card_gestao_clientes)
         this.cardGestaoProdutos = findViewById(R.id.constraint_card_gestao_produtos)
         this.cardRealizarVenda = findViewById(R.id.constraint_card_realizar_venda)
@@ -41,6 +46,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         this.cardGestaoClientes.setOnClickListener(this)
         this.cardGestaoProdutos.setOnClickListener(this)
         this.cardRealizarVenda.setOnClickListener(this)
+        this.btnMenuCabecalho.setOnClickListener(this)
 
         this.btnFiltro.visibility = View.GONE
         this.btnAdicionar.visibility = View.GONE
@@ -57,6 +63,25 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         }
 
         this.alertaRetornar = AlertaConfirmarVoltar(this, "Deseja sair do aplicativo?", confirmarListenerSairApp)
+
+        // listener para realizar logout
+        val onLogout: () -> Unit = {
+            // implementar lógica do logout
+            val intentLogin = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intentLogin)
+            finish()
+        }
+
+        // listener para realizar redirecionamento para tela "sobre"
+        val onRedirecionarSobre: () -> Unit = {
+
+        }
+
+        this.menuOpcoesCabecalho = MenuOpcoesCabecalho(
+            this,
+            onLogout,
+            onRedirecionarSobre
+        )
     }
 
     private fun voltar() {
@@ -95,6 +120,9 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             this.redirecionar("gestao_produtos")
         } else if (p0!!.id == R.id.constraint_card_realizar_venda) {
             this.redirecionar("realizar_venda")
+        } else if (p0!!.id == R.id.btn_menu_opcoes) {
+            // abrir menu com opções do cabeçalho
+            this.menuOpcoesCabecalho.apresentarMenu(p0!!)
         }
 
     }

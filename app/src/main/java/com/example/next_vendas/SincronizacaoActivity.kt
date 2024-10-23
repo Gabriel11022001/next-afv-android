@@ -31,6 +31,7 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     private lateinit var txtTitulo: TextView
     private lateinit var btnAdicionar: ImageButton
     private lateinit var btnFiltro: ImageButton
+    private lateinit var btnMenuOpcoesCabecalho: ImageButton
     private lateinit var btnSincronizar: AppCompatButton
     private lateinit var linearContainerProgresso: LinearLayout
     private lateinit var txtProgressoSincronizacao: TextView
@@ -59,6 +60,7 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         this.linearContainerProgresso = findViewById(R.id.linear_container_loader)
         this.txtProgressoSincronizacao = findViewById(R.id.txt_progresso_sincronizacao)
         this.progressBarSincronizacao = findViewById(R.id.progress_bar_sincronizacao)
+        this.btnMenuOpcoesCabecalho = findViewById(R.id.btn_menu_opcoes)
 
         this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_configuracoes))
         this.opcoesSincronizarStatus.add(findViewById(R.id.txt_status_sinc_clientes))
@@ -75,8 +77,9 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
         this.btnSincronizar.setOnClickListener(this)
 
         this.txtTitulo.text = "Sincronização"
-        this.btnAdicionar.visibility = View.GONE
-        this.btnFiltro.visibility = View.GONE
+        this.btnAdicionar.visibility = GONE
+        this.btnFiltro.visibility = GONE
+        this.btnMenuOpcoesCabecalho.visibility = GONE
 
         this.sharedPreferencesConfiguracoes = getSharedPreferences("CONFIGURACOES", MODE_PRIVATE)
 

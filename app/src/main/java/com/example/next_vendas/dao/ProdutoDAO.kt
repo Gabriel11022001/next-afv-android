@@ -3,6 +3,7 @@ package com.example.next_vendas.dao
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.util.Log
 import com.example.next_vendas.model.CategoriaProduto
 import com.example.next_vendas.model.Produto
 import java.util.ArrayList
@@ -53,9 +54,55 @@ class ProdutoDAO(val contexto: Context): BaseDAO(contexto) {
         return null
     }
 
-    fun filtrarProdutosPeloNome(nome: String): ArrayList<Produto> {
+    fun filtrarProdutos(where: String, parametrosFiltro: List<String>): ArrayList<Produto> {
 
-        return arrayListOf()
+        Log.d("nome_produto_filtro", parametrosFiltro[ 0 ])
+        Log.d("preco_de_filtro", parametrosFiltro[ 1 ])
+        Log.d("preco_final_filtro", parametrosFiltro[ 2 ])
+
+        var nomeProdFiltro = ""
+        var precoDe = 0.0
+        var precoAte = 9999999.0
+
+        if (parametrosFiltro[ 0 ].isNotBlank()) {
+            nomeProdFiltro = parametrosFiltro[ 0 ]
+        }
+
+        if (parametrosFiltro[ 1 ].isNotBlank()) {
+            precoDe = parametrosFiltro[ 1 ].toDouble()
+        }
+
+        if (parametrosFiltro[ 2 ].isNotBlank()) {
+            precoAte = parametrosFiltro[ 2 ].toDouble()
+        }
+
+        val whereNovo = """
+            p.nome_produto LIKE "%$nomeProdFiltro%" AND p.preco_venda >= $precoDe AND p.preco_venda <= $precoAte
+        """.trimIndent()
+
+        val produtosFiltro: ArrayList<Produto> = arrayListOf()
+
+        val query = "SELECT p.id, p.nome_produto, p.preco_venda, p.unidades_estoque, p.foto, p.codigo, p.codigo_barras, p.preco_compra, p.status," +
+                " c.descricao AS categoria_produto, c.id AS id_categoria" +
+                " FROM tb_produtos AS p, tb_categorias_produtos AS c" +
+                " WHERE ${ whereNovo } AND p.categoria_id = c.id" +
+                " ORDER BY p.nome_produto ASC"
+
+        Log.d("query_filtro_produtos", query)
+
+        val cursor = super.bancoDados.rawQuery(query, null)
+
+        if (cursor != null) {
+
+            while (cursor.moveToNext()) {
+                val produto = Produto()
+                
+            }
+
+            cursor.close()
+        }
+
+        return produtosFiltro
     }
 
     fun cadastrarProduto(produto: Produto): Int {

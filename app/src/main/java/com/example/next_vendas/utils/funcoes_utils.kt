@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.next_vendas.model_servico.ConfiguracaoModelServico
 import com.example.next_vendas.model_servico.UsuarioModelServico
 import com.google.gson.JsonObject
+import java.util.Date
 
 /**
  * função que valida se o usuário está ou não conectado a internet,
@@ -106,4 +107,26 @@ fun salvarConfiguracoesPreferenciasCompartilhadas(
         // setar campos obrigatórios da pessoa física nas preferências compartilhadas
     }
 
+}
+
+/**
+ * setar a data da ultima sincronização do usuário, para poder validar
+ * depois se já se passaram 3 dias desde a ultima sinc para forçar o usuário a sincronizar
+ */
+fun setarPreferenciasCompartilhadasUltimaSincronizacao(
+    dataUltimaSincronizacao: Date,
+    sharedPreferencesSincronizacao: SharedPreferences
+) {
+
+}
+
+/**
+ * função para validar se
+ */
+fun validarPrecisaSincronizar(
+    dataUltimaSinc: Date,
+    sharedPreferencesSincronizacao: SharedPreferences
+): Boolean {
+
+    return false
 }
