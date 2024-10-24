@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Servico {
 
-    private val URL_BASE: String = "http://192.168.1.4:8080/api/"
+    private val URL_BASE: String = "http://192.168.1.5:8080/api/"
 
     private fun getRetrofit(): Retrofit {
 

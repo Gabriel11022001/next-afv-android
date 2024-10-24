@@ -74,7 +74,9 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
 
         // listener para realizar redirecionamento para tela "sobre"
         val onRedirecionarSobre: () -> Unit = {
-
+            val intentRedirecionarSobre = Intent(this, SobreActivity::class.java)
+            startActivity(intentRedirecionarSobre)
+            finish()
         }
 
         this.menuOpcoesCabecalho = MenuOpcoesCabecalho(
