@@ -25,9 +25,12 @@ import com.example.next_vendas.api.TotalEntidadesApi
 import com.example.next_vendas.dao.CategoriaProdutoDAO
 import com.example.next_vendas.dao.ClienteDAO
 import com.example.next_vendas.dao.ProdutoDAO
+import com.example.next_vendas.utils.setarPreferenciasCompartilhadasUltimaSincronizacao
+import java.util.Date
 
 class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
 
+    private lateinit var sharedPreferencesSincronizacao: SharedPreferences
     private lateinit var txtTitulo: TextView
     private lateinit var btnAdicionar: ImageButton
     private lateinit var btnFiltro: ImageButton
@@ -51,6 +54,8 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sincronizacao)
+
+        this.sharedPreferencesSincronizacao = getSharedPreferences("PREFS_SINC", MODE_PRIVATE)
 
         // mapear elementos de interface
         this.btnAdicionar = findViewById(R.id.btn_adicionar_menu)
@@ -130,6 +135,13 @@ class SincronizacaoActivity : AppCompatActivity(), OnClickListener {
     private fun sincronizar() {
 
         try {
+            // salvar data atual da sinc nas preferências compartilhadas
+            val dataSinc: Date = Date()
+            setarPreferenciasCompartilhadasUltimaSincronizacao(
+                dataSinc,
+                this.sharedPreferencesSincronizacao
+            )
+
             this.btnSincronizar.visibility = GONE
 
             for (opcaoStatusSinc in this.opcoesSincronizarStatus) {

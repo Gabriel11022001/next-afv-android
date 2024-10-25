@@ -2,11 +2,17 @@ package com.example.next_vendas.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.util.Log
 import com.example.next_vendas.model_servico.ConfiguracaoModelServico
 import com.example.next_vendas.model_servico.UsuarioModelServico
 import com.google.gson.JsonObject
+import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.concurrent.TimeUnit
+
+const val QTD_DIAS_SINC: Int = 3
 
 /**
  * função que valida se o usuário está ou não conectado a internet,
@@ -117,16 +123,44 @@ fun setarPreferenciasCompartilhadasUltimaSincronizacao(
     dataUltimaSincronizacao: Date,
     sharedPreferencesSincronizacao: SharedPreferences
 ) {
+    val editorSharedPreferencesSincronizacao: Editor = sharedPreferencesSincronizacao.edit()
 
+    // obter data da ultima sinc em formato de texto Y-m-d H:i:s
+    val formatoData: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val dataUltimaSincFormatada: String = formatoData.format(dataUltimaSincronizacao)
+
+    editorSharedPreferencesSincronizacao.putString("data_ultima_sinc", dataUltimaSincFormatada)
+
+    Log.d("data_ultima_sinc", dataUltimaSincFormatada)
+
+    editorSharedPreferencesSincronizacao.commit()
 }
 
 /**
- * função para validar se
+ * função para validar se vai ser necessário o usuário sincronizar o app novamente
  */
 fun validarPrecisaSincronizar(
-    dataUltimaSinc: Date,
     sharedPreferencesSincronizacao: SharedPreferences
 ): Boolean {
+    // obter data da ultima sinc
+    val dataUltimaSincTexto: String = sharedPreferencesSincronizacao.getString("data_ultima_sinc", "").toString()
 
-    return false
+    if (dataUltimaSincTexto.isEmpty()) {
+        // é a primeira vez que está logando, precisa fazer a sinc
+
+        return true
+    }
+
+    val dataUltimaSinc: Date? = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dataUltimaSincTexto)
+    val dataAtual: Date = Date()
+
+    if (dataUltimaSinc != null) {
+        val diferencaDiasTime = dataAtual.time - dataUltimaSinc.time
+        val diferencaEmDias = TimeUnit.MILLISECONDS.toDays(diferencaDiasTime)
+
+        return diferencaEmDias >= QTD_DIAS_SINC
+    } else {
+        throw Exception("Ocorreu um erro ao tentar-se fazer o parse da data da ultima sincronização para um objeto do tipo Date.")
+    }
+
 }

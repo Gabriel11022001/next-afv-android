@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.next_vendas.api.IOnEnviarServidor
@@ -16,6 +15,7 @@ import com.example.next_vendas.utils.Alerta
 import com.example.next_vendas.utils.Loader
 import com.example.next_vendas.utils.validarEmail
 import com.example.next_vendas.utils.validarEstaConectadoInternet
+import com.example.next_vendas.utils.validarPrecisaSincronizar
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         return msgErro
     }
 
-    private fun relizarLoginServidor() {
+    private fun realizarLoginServidor() {
         // apresentar loader
         this.loader.iniciarLoader("Carregando, aguarde...")
 
@@ -93,8 +93,19 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun redirecionarTelaSincronizacao() {
-        val intentTelaSincronizacao = Intent(this, SincronizacaoActivity::class.java)
-        startActivity(intentTelaSincronizacao)
+        val sharedPreferencesSincronizacao = getSharedPreferences("PREFS_SINC", MODE_PRIVATE)
+        val precisaSincronizar: Boolean = validarPrecisaSincronizar(sharedPreferencesSincronizacao)
+
+        if (precisaSincronizar) {
+            /// redirecionar para tela de sincronização
+            val intentTelaSincronizacao = Intent(this, SincronizacaoActivity::class.java)
+            startActivity(intentTelaSincronizacao)
+        } else {
+            // redirecionar para tela home(não precisa sincronizar agora)
+            val intentTelaHome = Intent(this, HomeActivity::class.java)
+            startActivity(intentTelaHome)
+        }
+
         finish()
     }
 
@@ -108,7 +119,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 if (!validarEstaConectadoInternet(this)) {
                     this.alerta.apresentar("Você não está conectado a internet.")
                 } else {
-                    this.relizarLoginServidor()
+                    this.realizarLoginServidor()
                 }
 
             } else {
