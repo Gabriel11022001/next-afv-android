@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrarseActivity"
+    android:background="@color/cinza_fundo_telas" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/btn_retornar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_seta_menu"
+            android:padding="20dp"
+            android:background="@drawable/estilo_btn_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp" />
+
+        <ImageView
+            android:id="@+id/img_ilustracao_usuario_registrar"
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:src="@drawable/img_usuario_tela_registrarse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_alerta_sobre_chave_acesso"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_ilustracao_usuario_registrar"
+            android:background="@color/principal"
+            android:padding="13dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <ImageView
+                android:id="@+id/icone_notificacao_chave_acesso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notificacao_chave_acesso"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icone_notificacao_chave_acesso"
+                app:layout_constraintTop_toTopOf="@id/icone_notificacao_chave_acesso"
+                app:layout_constraintBottom_toBottomOf="@id/icone_notificacao_chave_acesso"
+                android:text="@string/txt_titulo_sobre_chave_acesso"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"
+                android:textSize="18sp"
+                android:layout_marginStart="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/icone_notificacao_chave_acesso"
+                app:layout_constraintTop_toBottomOf="@id/icone_notificacao_chave_acesso"
+                android:text="@string/txt_sobre_chave_acesso"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:textStyle="italic" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+        <!-- nome do usuário -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_nome_usuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_alerta_sobre_chave_acesso"
+            android:background="@drawable/estilo_container_padrao"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_nome_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Nome"
+                    android:textColor="@color/principal"
+                    android:textColorHint="@color/principal"
+                    android:textSize="18sp"
+                    android:inputType="textPersonName" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- e-mail do usuário -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_email_usuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_nome_usuario"
+            android:background="@drawable/estilo_container_padrao"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_email_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="E-mail"
+                    android:textColor="@color/principal"
+                    android:textColorHint="@color/principal"
+                    android:textSize="18sp"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- senha do usuário -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_senha_usuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_email_usuario"
+            android:background="@drawable/estilo_container_padrao"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_senha_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Senha"
+                    android:textColor="@color/principal"
+                    android:textColorHint="@color/principal"
+                    android:textSize="18sp"
+                    android:inputType="numberPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- senha do usuário(confirmar) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_senha_usuario_confirmar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_senha_usuario"
+            android:background="@drawable/estilo_container_padrao"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_senha_usuario_confirmar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Confirmar senha"
+                    android:textColor="@color/principal"
+                    android:textColorHint="@color/principal"
+                    android:textSize="18sp"
+                    android:inputType="numberPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- chave de acesso -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_chave_acesso"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_senha_usuario_confirmar"
+            app:layout_constraintBottom_toTopOf="@id/btn_finalizar_cadastro"
+            android:background="@drawable/estilo_container_padrao"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp" >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_chave_acesso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Chave de acesso"
+                    android:textColor="@color/principal"
+                    android:textColorHint="@color/principal"
+                    android:textSize="18sp"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- botão que ao ser clicado finaliza o cadastro do usuário -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_finalizar_cadastro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_chave_acesso"
+            android:background="@drawable/estilo_btn_padrao"
+            android:text="Finalizar cadastro"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            android:padding="10dp"
+            android:elevation="4dp"
+            android:textStyle="italic"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</ScrollView>

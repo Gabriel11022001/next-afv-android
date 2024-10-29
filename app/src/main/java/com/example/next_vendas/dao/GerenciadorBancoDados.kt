@@ -88,7 +88,7 @@ open class GerenciadorBancoDados(contexto: Context): SQLiteOpenHelper(
                 "valor_produto_carrinho DECIMAL NOT NULL," +
                 "quantidade_unidades_produto_carrinho INTEGER NOT NULL," +
                 "FOREIGN KEY(produto_id) REFERENCES tb_produtos(id)," +
-                "FOREIGN KEY(cliente_id) REFERENCES tb_clientes(id))")
+                "FOREIGN KEY(venda_id) REFERENCES tb_vendas(id))")
     }
 
 }

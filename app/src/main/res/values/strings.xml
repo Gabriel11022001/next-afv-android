@@ -76,4 +76,6 @@
     <string name="txt_card_realizar_venda">Realizar venda</string>
     <string name="txt_menu_logout">Logout</string>
     <string name="txt_menu_sobre">Sobre</string>
+    <string name="txt_sobre_chave_acesso">Entre em contato com a empresa a qual você faz parte para solicitar a chave de acesso.</string>
+    <string name="txt_titulo_sobre_chave_acesso">Sobre a chave de acesso</string>
 </resources>

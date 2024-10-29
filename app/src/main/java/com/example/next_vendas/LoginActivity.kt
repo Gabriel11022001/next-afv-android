@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 // esconder o loader
                 loader.finalizarLoader()
                 // apresentar alerta com erro
-                alerta.apresentar(mensagemErro)
+                alerta.apresentar(mensagemErro, true)
             }
 
         })
@@ -117,17 +117,17 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             if (resultValidarFormularioLogin.isEmpty()) {
 
                 if (!validarEstaConectadoInternet(this)) {
-                    this.alerta.apresentar("Você não está conectado a internet.")
+                    this.alerta.apresentar("Você não está conectado a internet.", true)
                 } else {
                     this.realizarLoginServidor()
                 }
 
             } else {
-                this.alerta.apresentar(resultValidarFormularioLogin)
+                this.alerta.apresentar(resultValidarFormularioLogin, true)
             }
 
         } catch (e: Exception) {
-            this.alerta.apresentar("Ocorreu um erro ao tentar-se realizar login, aguarde um instante e tente novamente.")
+            this.alerta.apresentar("Ocorreu um erro ao tentar-se realizar login, aguarde um instante e tente novamente.", true)
             Log.e("erro_login", "Ocorreu o seguinte erro ao tentar-se realizar login: ${ e.message.toString() }")
         }
 
