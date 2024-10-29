@@ -71,6 +71,24 @@ open class GerenciadorBancoDados(contexto: Context): SQLiteOpenHelper(
                 "categoria_id INTEGER NOT NULL," +
                 "status BOOLEAN," +
                 "FOREIGN KEY(categoria_id) REFERENCES tb_categorias_produtos(id))")
+
+        // criar a tabela de vendas
+        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_vendas(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "data_venda TEXT NOT NULL," +
+                "status TEXT NOT NULL," +
+                "valor_total DECIMAL NOT NULL," +
+                "cliente_id INTEGER," +
+                "FOREIGN KEY(cliente_id) REFERENCES tb_clientes(id))")
+
+        // criar tabela de produtos adicionados na venda
+        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS tb_produtos_vendas(" +
+                "produto_id INTEGER NOT NULL," +
+                "venda_id INTEGER NOT NULL," +
+                "valor_produto_carrinho DECIMAL NOT NULL," +
+                "quantidade_unidades_produto_carrinho INTEGER NOT NULL," +
+                "FOREIGN KEY(produto_id) REFERENCES tb_produtos(id)," +
+                "FOREIGN KEY(cliente_id) REFERENCES tb_clientes(id))")
     }
 
 }

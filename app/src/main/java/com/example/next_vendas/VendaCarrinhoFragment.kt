@@ -98,12 +98,17 @@ class VendaCarrinhoFragment : Fragment(), OnClickListener {
 
     }
 
+    private fun adicionarProdutoCarrinho() {
+
+    }
+
     override fun onClick(p0: View?) {
 
         if (p0!!.id == R.id.btn_retornar) {
             this.retornar()
         } else if (p0!!.id == R.id.btn_adicionar_produto_carrinho) {
             // adicionar produto no carrinho
+            this.adicionarProdutoCarrinho()
         } else {
             // prosseguir para segunda etapa
         }

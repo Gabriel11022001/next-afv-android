@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.next_vendas.adapter.ProdutoAdapter
 import com.example.next_vendas.dao.ProdutoDAO
+import com.example.next_vendas.dialog.DialogDetalhesProduto
 import com.example.next_vendas.dialog.DialogFiltro
 import com.example.next_vendas.listener.IOnVisualizar
 import com.example.next_vendas.model.Filtro
@@ -28,6 +29,7 @@ class ProdutosActivity : AppCompatActivity(), OnClickListener {
     private lateinit var produtoAdapter: ProdutoAdapter
     private lateinit var produtoDAO: ProdutoDAO
     private lateinit var dialogFiltroProdutos: DialogFiltro
+    private lateinit var dialogDetalhesProduto: DialogDetalhesProduto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +52,17 @@ class ProdutosActivity : AppCompatActivity(), OnClickListener {
         this.btnRetornar.setOnClickListener(this)
         this.btnFiltro.setOnClickListener(this)
 
+        this.dialogDetalhesProduto = DialogDetalhesProduto(
+            this,
+            getColor(android.R.color.holo_red_dark),
+            getColor(android.R.color.holo_green_dark)
+        )
+
         // configurar listener do evento de visualizar produto
         val iOnVisualizarProduto: IOnVisualizar = object : IOnVisualizar {
 
             override fun visualizar(idEntidade: Int) {
-
+                visualizarDetalhesProduto(idEntidade)
             }
 
         }
@@ -126,6 +134,23 @@ class ProdutosActivity : AppCompatActivity(), OnClickListener {
             "Filtrar produtos",
             onFiltrarProdutos
         )
+    }
+
+    private fun visualizarDetalhesProduto(idProdutoVisualizar: Int) {
+        // apresentar AlertDialog com detalhes do produto
+
+        try {
+            val produtoApresentar = this.produtoDAO.buscarProdutoPeloId(idProdutoVisualizar)
+
+            if (produtoApresentar != null) {
+                this.dialogDetalhesProduto.visualizar(produtoApresentar)
+            }
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "Ocorreu um erro ao tentar-se visualizar o produto.", Toast.LENGTH_LONG)
+                .show()
+        }
+
     }
 
     override fun onStart() {

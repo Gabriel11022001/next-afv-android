@@ -50,8 +50,29 @@ class ProdutoDAO(val contexto: Context): BaseDAO(contexto) {
     }
 
     fun buscarProdutoPeloId(idProduto: Int): Produto? {
+        val query = "SELECT * FROM tb_produtos WHERE id = ?"
+        val cursor = super.bancoDados.rawQuery(query, arrayOf(idProduto.toString()))
+        var produto: Produto? = null
 
-        return null
+        if (cursor != null) {
+
+            if (cursor.moveToFirst()) {
+                produto = Produto()
+                produto.id = cursor.getInt(cursor.getColumnIndex("id"))
+                produto.nome = cursor.getString(cursor.getColumnIndex("nome_produto"))
+                produto.precoVenda = cursor.getDouble(cursor.getColumnIndex("preco_venda"))
+                produto.precoCompra = cursor.getDouble(cursor.getColumnIndex("preco_compra"))
+                produto.status = if (cursor.getInt(cursor.getColumnIndex("status")) == 1) true else false
+                produto.unidadesEstoque = cursor.getInt(cursor.getColumnIndex("unidades_estoque"))
+                produto.fotoProduto = cursor.getString(cursor.getColumnIndex("foto"))
+                produto.codigo = cursor.getString(cursor.getColumnIndex("codigo"))
+                produto.codigoBarras = cursor.getString(cursor.getColumnIndex("codigo_barras"))
+            }
+
+            cursor.close()
+        }
+
+        return produto
     }
 
     fun filtrarProdutos(where: String, parametrosFiltro: List<String>): ArrayList<Produto> {

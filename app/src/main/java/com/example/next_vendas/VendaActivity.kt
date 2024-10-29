@@ -7,16 +7,20 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
+import com.example.next_vendas.dao.VendaDAO
 
 class VendaActivity : AppCompatActivity() {
 
     private lateinit var fragmentContainerViewVenda: FragmentContainerView
 
     private var idVenda: Int = 0
+    private lateinit var vendaDAO: VendaDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_venda)
+
+        this.vendaDAO = VendaDAO(this)
 
         // mapear elementos de interface
         this.fragmentContainerViewVenda = findViewById(R.id.fragment_container_view_realizar_venda)
@@ -29,6 +33,13 @@ class VendaActivity : AppCompatActivity() {
     }
 
     private fun registrarVendaInicio() {
+
+        try {
+            // registrar venda no início
+            this.idVenda = this.vendaDAO.registrarVendaInicio()
+        } catch (e: Exception) {
+            Log.e("erro_criar_venda_inicio", e.message.toString())
+        }
 
     }
 
