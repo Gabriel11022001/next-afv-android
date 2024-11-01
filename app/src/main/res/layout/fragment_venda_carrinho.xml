@@ -110,6 +110,7 @@
         android:textColor="@color/principal"
         android:layout_gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:layout_marginTop="100dp" />
 
 </LinearLayout>

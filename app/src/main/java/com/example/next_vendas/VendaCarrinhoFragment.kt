@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -65,8 +66,11 @@ class VendaCarrinhoFragment : Fragment(), OnClickListener {
         this.btnRetornar.setOnClickListener(this)
 
         this.txtTitulo.text = "Venda"
-        this.btnAdicionar.visibility = View.GONE
-        this.btnFiltro.visibility = View.GONE
+        this.btnAdicionar.visibility = GONE
+        this.btnFiltro.visibility = GONE
+
+        this.txtNaoExistemProdutosCarrinho.visibility = GONE
+        this.recyclerCarrinho.visibility = GONE
     }
 
     override fun onStart() {
@@ -99,7 +103,16 @@ class VendaCarrinhoFragment : Fragment(), OnClickListener {
     }
 
     private fun adicionarProdutoCarrinho() {
+        val bundleContendoIdVenda = Bundle()
+        bundleContendoIdVenda.putInt("id_venda", this.idVenda)
 
+        val fragmentoAdicionarProdutosCarrinho: Fragment = AdicionarProdutoCarrinhoFragment()
+        fragmentoAdicionarProdutosCarrinho.arguments = bundleContendoIdVenda
+
+        val transacaoFragmentAdicionarProdutosCarrinho = requireActivity().supportFragmentManager.beginTransaction()
+        transacaoFragmentAdicionarProdutosCarrinho.replace(R.id.fragment_container_view_realizar_venda, fragmentoAdicionarProdutosCarrinho)
+        transacaoFragmentAdicionarProdutosCarrinho.addToBackStack(null)
+        transacaoFragmentAdicionarProdutosCarrinho.commit()
     }
 
     override fun onClick(p0: View?) {

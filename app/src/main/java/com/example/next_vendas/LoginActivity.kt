@@ -55,13 +55,13 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         val senha: String = this.edtSenha.text.toString().trim()
 
         if (email == "") {
-            msgErro = "Informe o e-mail."
+            msgErro = "Informe seu e-mail para acessar o aplicativo."
         } else if (senha == "") {
-            msgErro = "Informe a senha."
+            msgErro = "Informe sua senha para acessar o aplicativo."
         } else if (!validarEmail(email)) {
-            msgErro = "E-mail inválido."
+            msgErro = "O formato do e-mail informado é inválido, informe um e-mail no formato correto, exemplo: email@exemplo.com"
         } else if (senha.length < 5) {
-            msgErro = "Senha inválida."
+            msgErro = "Senha inválida, a senha deve possuir no mínimo cinco caracteres."
         }
 
         return msgErro
