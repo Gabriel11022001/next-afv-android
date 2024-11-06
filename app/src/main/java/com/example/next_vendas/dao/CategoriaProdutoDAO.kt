@@ -2,6 +2,7 @@ package com.example.next_vendas.dao
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import com.example.next_vendas.model.CategoriaProduto
 
 class CategoriaProdutoDAO(
@@ -62,6 +63,27 @@ class CategoriaProdutoDAO(
         }
 
         return idCategoria
+    }
+
+    fun buscarCategoriasAtivas(): ArrayList<CategoriaProduto> {
+        val categorias: ArrayList<CategoriaProduto> = ArrayList()
+        val query: String = "SELECT id, descricao FROM tb_categorias_produtos WHERE status = true"
+        val cursor: Cursor = super.bancoDados.rawQuery(query, null)
+
+        if (cursor != null) {
+
+            while (cursor.moveToNext()) {
+                val categoriaProduto: CategoriaProduto = CategoriaProduto()
+                categoriaProduto.id = cursor.getInt(cursor.getColumnIndex("id"))
+                categoriaProduto.descricao = cursor.getString(cursor.getColumnIndex("descricao"))
+
+                categorias.add(categoriaProduto)
+            }
+
+            cursor.close()
+        }
+
+        return categorias
     }
 
 }

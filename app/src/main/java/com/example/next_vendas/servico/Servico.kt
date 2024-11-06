@@ -5,12 +5,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Servico {
 
-    private val URL_BASE: String = "http://192.168.1.5:8080/api/"
+    private val URL_BASE: String = "http://192.168.1.6:8080/api/"
+    private val URL_VIA_CEP: String = "https://viacep.com.br/ws/"
 
     private fun getRetrofit(): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(this.URL_BASE)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    // obter a instância Retrofit para consumir a api do ViaCEP
+    private fun getRetrofitViaCep(): Retrofit {
+
+        return Retrofit.Builder()
+            .baseUrl(this.URL_VIA_CEP)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -43,6 +53,11 @@ class Servico {
     fun getProdutoServico(): ProdutoServico {
 
         return this.getRetrofit().create(ProdutoServico::class.java)
+    }
+
+    fun getViaCepServico(): ViaCEPServico {
+
+        return this.getRetrofitViaCep().create(ViaCEPServico::class.java)
     }
 
 }

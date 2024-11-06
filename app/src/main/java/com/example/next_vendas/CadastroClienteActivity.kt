@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.next_vendas.api.ClienteApi
 import com.example.next_vendas.api.IOnEnviarServidor
+import com.example.next_vendas.api.ViaCepApi
 import com.example.next_vendas.componentes.EditTextTelefone
 import com.example.next_vendas.componentes.MascaraTextWhatcher
 import com.example.next_vendas.dao.ClienteDAO
@@ -328,6 +329,8 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
 
         // definir máscara do cnpj no campo de cnpj da pessoa juridica
         this.edtCnpj.addTextChangedListener(MascaraTextWhatcher(this.edtCnpj, Mascaras.CNPJ))
+
+        // setando os dados nos campos da pessoa juridica
     }
 
     private fun controlarExpandirSecao(secao: String) {
@@ -669,6 +672,71 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
         this.spnEstado.setSelection(posicaoEstado)
     }
 
+    private fun buscarEnderecoPeloCep() {
+
+        try {
+            val cep: String = this.edtCep.text.toString().trim()
+
+            if (cep.isBlank()) {
+                Toast.makeText(this, "Informe o cep para consulta.", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+
+                val onRealizandoRequisicao: () -> Unit = {
+                    this.apresentarLoader("Consultando o cep, aguarde...")
+                }
+
+                val onErroRequisicao: (String) -> Unit = { mensagemErro ->
+                    this.esconderLoader()
+
+                    Toast.makeText(this, mensagemErro, Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                val onSucessoRequisicao: (Endereco) -> Unit = { endereco ->
+                    this.esconderLoader()
+                    // preencher campos do endereço com os dados obtidos
+                    this.edtEndereco.setText(endereco.endereco)
+                    this.edtComplemento.setText(endereco.complemento)
+                    this.edtCidade.setText(endereco.cidade)
+                    this.edtBairro.setText(endereco.bairro)
+                    this.edtNumero.setText("s/n")
+
+                    // selecionar o estado
+                    val estados: List<String> = listOf(
+                        "SP",
+                        "RJ",
+                        "PR"
+                    )
+
+                    var posicaoEstado: Int = 0
+
+                    for (i in 0 until estados.size) {
+
+                        if (estados[ i ] == endereco.uf) {
+                            posicaoEstado = i
+                        }
+
+                    }
+
+                    this.spnEstado.setSelection(posicaoEstado)
+                }
+
+                ViaCepApi.buscarEnderecoPeloCep(
+                    cep,
+                    onRealizandoRequisicao,
+                    onErroRequisicao,
+                    onSucessoRequisicao
+                )
+
+            }
+
+        } catch (e: Exception) {
+
+        }
+
+    }
+
     override fun onClick(p0: View?) {
 
         if (p0!!.id == R.id.linear_container_cadastro_completo_cliente_topo) {
@@ -677,6 +745,8 @@ class CadastroClienteActivity : AppCompatActivity(), OnClickListener {
             this.controlarExpandirSecao("endereco")
         } else if (p0!!.id == R.id.btn_salvar_cadastro_cliente) {
             this.salvarCliente()
+        } else if (p0!!.id == R.id.btn_consultar_cep) {
+            this.buscarEnderecoPeloCep()
         }
 
     }
