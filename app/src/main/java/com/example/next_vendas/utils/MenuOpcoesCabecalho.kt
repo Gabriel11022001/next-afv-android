@@ -11,7 +11,8 @@ import com.example.next_vendas.R
 class MenuOpcoesCabecalho(
     private val contexto: Context,
     private val onLogout: () -> Unit,
-    private val onRedirecionarSobre: () -> Unit
+    private val onRedirecionarSobre: () -> Unit,
+    private val onRedirecionarNotificacoes: () -> Unit
 ) {
 
     private lateinit var popupMenu: PopupMenu
@@ -34,6 +35,11 @@ class MenuOpcoesCabecalho(
                 logout()
 
                 true
+            }
+
+            if (menuItem.itemId == R.id.menu_item_notificacoes) {
+                // redirecionar o usuário para a tela de notificações
+                this.onRedirecionarNotificacoes()
             }
 
             false

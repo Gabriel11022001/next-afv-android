@@ -155,7 +155,8 @@ class PerfilActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun alterarPerfil() {
-
+        startActivity(Intent(this, EditarPerfilActivity::class.java))
+        finish()
     }
 
     override fun onBackPressed() {

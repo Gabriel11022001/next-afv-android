@@ -14,4 +14,10 @@
         android:title="@string/txt_menu_logout"
         app:showAsAction="never" />
 
+    <!-- opção redirecionar tela notificações -->
+    <item
+        android:id="@+id/menu_item_notificacoes"
+        android:title="Notificações"
+        app:showAsAction="never" />
+
 </menu>

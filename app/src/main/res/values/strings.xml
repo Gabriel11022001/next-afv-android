@@ -78,4 +78,5 @@
     <string name="txt_menu_sobre">Sobre</string>
     <string name="txt_sobre_chave_acesso">Entre em contato com a empresa a qual você faz parte para solicitar a chave de acesso.</string>
     <string name="txt_titulo_sobre_chave_acesso">Sobre a chave de acesso</string>
+    <string name="txt_card_perfil">Perfil</string>
 </resources>

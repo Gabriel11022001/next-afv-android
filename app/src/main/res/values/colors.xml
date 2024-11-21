@@ -17,4 +17,6 @@
     <color name="principal_30_porcento_transparencia">#B3123768</color>
     <color name="principal_mais_forte">#0F2A56</color>
     <color name="cinza_separador_linhas">#E0E0E0</color>
+    <color name="amarelo_notificacao">#f9ca24</color>
+    <color name="azul_fundo_loader">#99123768</color>
 </resources>

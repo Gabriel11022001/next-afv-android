@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Servico {
 
-    private val URL_BASE: String = "http://192.168.1.6:8080/api/"
+    private val URL_BASE: String = "http://192.168.1.4:8080/api/"
     private val URL_VIA_CEP: String = "https://viacep.com.br/ws/"
 
     private fun getRetrofit(): Retrofit {
@@ -58,6 +58,16 @@ class Servico {
     fun getViaCepServico(): ViaCEPServico {
 
         return this.getRetrofitViaCep().create(ViaCEPServico::class.java)
+    }
+
+    fun getUsuarioServico(): UsuarioServico {
+
+        return this.getRetrofit().create(UsuarioServico::class.java)
+    }
+
+    fun getNotificacaoServico(): NotificacaoServico {
+
+        return this.getRetrofit().create(NotificacaoServico::class.java)
     }
 
 }
