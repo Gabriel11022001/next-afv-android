@@ -3,7 +3,7 @@ workflows:
     name: Build Android App
     environment:
       android:
-        image: latest  # Use a imagem mais recente do Android
+        image: latest
     scripts:
       - name: Install Dependencies
         script: |
