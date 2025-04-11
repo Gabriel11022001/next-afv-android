@@ -2,16 +2,20 @@ workflows:
   build_and_deploy:
     name: Build Android App
     scripts:
+      # fornecer permissão para o draglew
       - name: Fornecer permissão para o gradlew
         script: |
           chmod +x ./gradlew 
+      # buildar o apk
       - name: Build APK
         script: |
           ./gradlew assembleDebug
+      # buildar o aab
       - name: Build AAB
         script: |
           ./gradlew bundleRelease
-      - name: Rename APK and AAB
+      # renomear o apk e o aab para NextAFVAndroid_{versão do app}.apk/aab
+      - name: Renomear APK e AAB
         script: |
           VERSION_NAME=$(grep "versionName" app/build.gradle | awk '{print $2}' | tr -d '\"')
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/NextAFVAndroid_${VERSION_NAME}.apk
