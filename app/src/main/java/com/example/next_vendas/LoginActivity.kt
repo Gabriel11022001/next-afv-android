@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.next_vendas.api.IOnEnviarServidor
@@ -16,6 +15,7 @@ import com.example.next_vendas.utils.Alerta
 import com.example.next_vendas.utils.Loader
 import com.example.next_vendas.utils.validarEmail
 import com.example.next_vendas.utils.validarEstaConectadoInternet
+import com.example.next_vendas.utils.validarPrecisaSincronizar
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -55,19 +55,19 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         val senha: String = this.edtSenha.text.toString().trim()
 
         if (email == "") {
-            msgErro = "Informe o e-mail."
+            msgErro = "Informe seu e-mail para acessar o aplicativo."
         } else if (senha == "") {
-            msgErro = "Informe a senha."
+            msgErro = "Informe sua senha para acessar o aplicativo."
         } else if (!validarEmail(email)) {
-            msgErro = "E-mail inválido."
+            msgErro = "O formato do e-mail informado é inválido, informe um e-mail no formato correto, exemplo: email@exemplo.com"
         } else if (senha.length < 5) {
-            msgErro = "Senha inválida."
+            msgErro = "Senha inválida, a senha deve possuir no mínimo cinco caracteres."
         }
 
         return msgErro
     }
 
-    private fun relizarLoginServidor() {
+    private fun realizarLoginServidor() {
         // apresentar loader
         this.loader.iniciarLoader("Carregando, aguarde...")
 
@@ -86,15 +86,26 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 // esconder o loader
                 loader.finalizarLoader()
                 // apresentar alerta com erro
-                alerta.apresentar(mensagemErro)
+                alerta.apresentar(mensagemErro, true)
             }
 
         })
     }
 
     private fun redirecionarTelaSincronizacao() {
-        val intentTelaSincronizacao = Intent(this, SincronizacaoActivity::class.java)
-        startActivity(intentTelaSincronizacao)
+        val sharedPreferencesSincronizacao = getSharedPreferences("PREFS_SINC", MODE_PRIVATE)
+        val precisaSincronizar: Boolean = validarPrecisaSincronizar(sharedPreferencesSincronizacao)
+
+        if (precisaSincronizar) {
+            /// redirecionar para tela de sincronização
+            val intentTelaSincronizacao = Intent(this, SincronizacaoActivity::class.java)
+            startActivity(intentTelaSincronizacao)
+        } else {
+            // redirecionar para tela home(não precisa sincronizar agora)
+            val intentTelaHome = Intent(this, HomeActivity::class.java)
+            startActivity(intentTelaHome)
+        }
+
         finish()
     }
 
@@ -106,17 +117,17 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             if (resultValidarFormularioLogin.isEmpty()) {
 
                 if (!validarEstaConectadoInternet(this)) {
-                    this.alerta.apresentar("Você não está conectado a internet.")
+                    this.alerta.apresentar("Você não está conectado a internet.", true)
                 } else {
-                    this.relizarLoginServidor()
+                    this.realizarLoginServidor()
                 }
 
             } else {
-                this.alerta.apresentar(resultValidarFormularioLogin)
+                this.alerta.apresentar(resultValidarFormularioLogin, true)
             }
 
         } catch (e: Exception) {
-            this.alerta.apresentar("Ocorreu um erro ao tentar-se realizar login, aguarde um instante e tente novamente.")
+            this.alerta.apresentar("Ocorreu um erro ao tentar-se realizar login, aguarde um instante e tente novamente.", true)
             Log.e("erro_login", "Ocorreu o seguinte erro ao tentar-se realizar login: ${ e.message.toString() }")
         }
 

@@ -73,4 +73,10 @@
     <string name="txt_nao_existem_clientes_cadastrados">Não existem clientes cadastrados.</string>
     <string name="txt_nao_informado">----- Não informado -----</string>
     <string name="txt_sinc_categorias_produtos">Categorias de produtos</string>
+    <string name="txt_card_realizar_venda">Realizar venda</string>
+    <string name="txt_menu_logout">Logout</string>
+    <string name="txt_menu_sobre">Sobre</string>
+    <string name="txt_sobre_chave_acesso">Entre em contato com a empresa a qual você faz parte para solicitar a chave de acesso.</string>
+    <string name="txt_titulo_sobre_chave_acesso">Sobre a chave de acesso</string>
+    <string name="txt_card_perfil">Perfil</string>
 </resources>

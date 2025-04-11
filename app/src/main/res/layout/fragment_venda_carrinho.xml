@@ -7,6 +7,8 @@
     android:background="@color/cinza_fundo_telas"
     android:orientation="vertical" >
 
+    <include layout="@layout/menu_topo" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +110,7 @@
         android:textColor="@color/principal"
         android:layout_gravity="center"
         android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:layout_marginTop="100dp" />
 
 </LinearLayout>

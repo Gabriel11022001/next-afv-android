@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cinza_fundo_telas">
+
+    <LinearLayout
+        android:id="@+id/container_topo_filtro_produtos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="20dp"
+        android:background="@color/principal"
+        android:elevation="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filtro"
+            android:textColor="@color/white"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+    <!-- nome do produto -->
+    <TextView
+        android:id="@+id/txt_label_nome_produto_filtro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome do produto"
+        android:textColor="@color/principal"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_topo_filtro_produtos"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:textAllCaps="true" />
+
+    <EditText
+        android:id="@+id/edt_nome_produto_filtro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_label_nome_produto_filtro"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Digite o nome do produto..."
+        android:textColor="@color/principal"
+        android:textSize="14sp" />
+
+    <!-- preço do produto -->
+    <TextView
+        android:id="@+id/txt_label_preco_produto_produto_filtro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preço do produto"
+        android:textColor="@color/principal"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_nome_produto_filtro"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:textAllCaps="true" />
+
+    <LinearLayout
+        android:id="@+id/container_preco_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/edt_nome_produto_filtro"
+        app:layout_constraintEnd_toEndOf="@id/edt_nome_produto_filtro"
+        app:layout_constraintTop_toBottomOf="@id/txt_label_preco_produto_produto_filtro"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <!-- campo para informar o preço inicial -->
+        <EditText
+            android:id="@+id/edt_preco_produto_filtro_de"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="De:"
+            android:layout_weight="1"
+            android:textColor="@color/principal"
+            android:textSize="14sp"
+            android:inputType="numberDecimal"
+            android:layout_marginEnd="20dp" />
+
+        <!-- campo para informar o preço final -->
+        <EditText
+            android:id="@+id/edt_preco_produto_filtro_ate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Até:"
+            android:layout_weight="1"
+            android:textColor="@color/principal"
+            android:textSize="14sp"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_filtrar_produtos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Aplicar filtro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_preco_produto"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/estilo_btn_padrao"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        app:layout_constraintVertical_bias="1" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

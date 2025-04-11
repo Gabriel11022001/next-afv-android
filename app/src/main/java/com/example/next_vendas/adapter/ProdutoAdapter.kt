@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.next_vendas.R
 import com.example.next_vendas.listener.IOnVisualizar
 import com.example.next_vendas.model.Produto
+import com.example.next_vendas.utils.PicassoUtils
 import com.example.next_vendas.view_holder.ProdutoViewHolder
 import java.util.ArrayList
 
@@ -38,6 +39,7 @@ class ProdutoAdapter(
 
         if (produto.fotoProduto != "") {
             // o produto possui foto, apresentar a foto utilizando o picasso
+            PicassoUtils.apresentarImagem(produto.fotoProduto, holder.imgProduto)
         }
 
         // evento de visualizar os dados do produto

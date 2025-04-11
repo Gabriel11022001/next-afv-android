@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="15dp"
+    android:background="@drawable/estilo_adapter_borda_redonda"
+    android:layout_margin="10dp"
+    android:elevation="5dp">
+
+    <ImageView
+        android:id="@+id/ic_notificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_notificacao_chave_acesso"
+        android:tint="@color/principal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_atencao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atenção!"
+        app:layout_constraintStart_toEndOf="@id/ic_notificacao"
+        app:layout_constraintTop_toTopOf="@id/ic_notificacao"
+        app:layout_constraintBottom_toBottomOf="@id/ic_notificacao"
+        android:layout_marginStart="7dp"
+        android:textColor="@color/principal"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <!-- data de cadastro da notificação -->
+    <TextView
+        android:id="@+id/txt_data_cadastro_notificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_atencao"
+        app:layout_constraintBottom_toBottomOf="@id/txt_atencao"
+        android:text="11/02/2023 18:09"
+        android:textColor="@color/principal"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- mensagem da notificação -->
+    <TextView
+        android:id="@+id/txt_mensagem_notificacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."
+        app:layout_constraintTop_toBottomOf="@id/ic_notificacao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -196,6 +196,74 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- card realizar venda -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_card_realizar_venda"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="1dp"
+            android:background="@drawable/estilo_fundo_card_home"
+            android:padding="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/txt_card_realizar_venda"
+                android:textColor="@color/principal"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:textAllCaps="true" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icone_realizar_venda_home_menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- card perfil -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_card_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            android:elevation="1dp"
+            android:background="@drawable/estilo_fundo_card_home"
+            android:padding="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/txt_card_perfil"
+                android:textColor="@color/principal"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                android:textAllCaps="true" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_perfil_home_opcao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
     
 </ScrollView>

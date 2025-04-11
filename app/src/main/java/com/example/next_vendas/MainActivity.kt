@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         if (p0!!.id == R.id.btn_realizar_login) {
             startActivity(Intent(this, LoginActivity::class.java))
         } else {
-
+            startActivity(Intent(this, RegistrarseActivity::class.java))
+            finish()
         }
 
     }

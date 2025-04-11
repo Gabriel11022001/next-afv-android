@@ -2,6 +2,7 @@ package com.example.next_vendas.api
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.next_vendas.model_servico.AlteracaoSenhaModelServico
 import com.example.next_vendas.model_servico.UsuarioModelServico
 import com.example.next_vendas.servico.RespostaBase
 import com.example.next_vendas.servico.Servico
@@ -59,6 +60,56 @@ class LoginApi(
                 override fun onFailure(call: Call<RespostaBase<UsuarioModelServico>>, t: Throwable) {
                     // erro ao tentar-se consumir o endpoint do login
                     iOnEnviarServidor.erro("Ocorreu o seguinte erro ao tentar-se realizar login: ${ t.message.toString() }.")
+                }
+
+            })
+    }
+
+    fun alterarSenhaUsuario(
+        emailUsuarioLogado: String,
+        senhaAtualUsuarioLogado: String,
+        novaSenha: String,
+        iOnEnviarServidor: IOnEnviarServidor
+    ) {
+        val loginServico = Servico().getLoginService()
+
+        val alteracaoSenhaModelServico = AlteracaoSenhaModelServico(
+            emailUsuarioLogado = emailUsuarioLogado,
+            senhaAtualUsuarioLogado = senhaAtualUsuarioLogado,
+            novaSenha = novaSenha
+        )
+
+        loginServico.alterarSenhaUsuarioLogado(alteracaoSenhaModelServico)
+            .enqueue(object : Callback<RespostaBase<String>> {
+
+                override fun onResponse(call: Call<RespostaBase<String>>, response: Response<RespostaBase<String>>) {
+
+                    if (response.isSuccessful) {
+                        val respostaMensagem = response.body()!!.mensagem
+
+                        if (respostaMensagem == "Senha alterada com sucesso.") {
+                            Log.d("alterar_senha", "Senha alterada com sucesso.")
+
+                            iOnEnviarServidor.sucesso("Senha alterada com sucesso, você será redirecionado a tela de login.")
+                        } else {
+                            Log.d("erro_alterar_senha", respostaMensagem)
+
+                            iOnEnviarServidor.erro(respostaMensagem)
+                        }
+
+                    } else {
+                        // erro ao tentar-se alterar a senha
+                        Log.d("erro_alterar_senha", "Ocorreu um erro ao tentar-se alterar a senha.")
+
+                        iOnEnviarServidor.erro("Ocorreu um erro ao tentar-se alterar a senha, tente novamente.")
+                    }
+
+                }
+
+                override fun onFailure(call: Call<RespostaBase<String>>, t: Throwable) {
+                    Log.e("erro_alterar_senha", t.message.toString())
+
+                    iOnEnviarServidor.erro("Ocorreu um erro ao tentar-se alterar a senha, tente novamente.")
                 }
 
             })
