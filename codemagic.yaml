@@ -15,7 +15,7 @@ workflows:
         script: |
           ./gradlew bundleRelease
       # executar testes unitários
-      - name: Executar teste unitários
+      - name: Executar testes unitários
         script: |
           ./gradlew test
       # renomear o apk e o aab para NextAFVAndroid_{versão do app}.apk/aab
