@@ -30,14 +30,42 @@ fun validarEmail(email: String): Boolean {
     return true
 }
 
+// validar cpf
 fun validarCpf(cpf: String): Boolean {
+    // Remove caracteres não numéricos
+    val cleanedCpf = cpf.replace("\\D".toRegex(), "")
 
-    return true
+    // Verifica se o CPF tem 11 dígitos e não é uma sequência de dígitos iguais
+    if (cleanedCpf.length != 11 || cleanedCpf.all { it == cleanedCpf[0] }) {
+
+        return false
+    }
+
+    // Calcula o primeiro dígito verificador
+    val firstDigit = calcularDigito(cleanedCpf.substring(0, 9), 10)
+
+    // Calcula o segundo dígito verificador
+    val secondDigit = calcularDigito(cleanedCpf.substring(0, 9) + firstDigit, 11)
+
+    // Verifica se os dígitos calculados correspondem aos dígitos do CPF
+    return cleanedCpf[9] == firstDigit && cleanedCpf[10] == secondDigit
 }
 
 fun validarDataNascimento(dataNascimento: String): Boolean {
 
     return true
+}
+
+private fun calcularDigito(cpfBase: String, peso: Int): Char {
+    var soma = 0
+
+    for (i in cpfBase.indices) {
+        soma += cpfBase[i].digitToInt() * (peso - i)
+    }
+
+    val resto = soma % 11
+
+    return if (resto < 2) '0' else (11 - resto).digitToChar()
 }
 
 fun validarCep(cep: String): Boolean {
