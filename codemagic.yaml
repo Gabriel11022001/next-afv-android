@@ -2,9 +2,9 @@ workflows:
   build_and_deploy:
     name: Build Android App
     scripts:
-      - name: Install Dependencies
+      - name: Grant execute permission to gradlew
         script: |
-          echo "No specific dependencies to install" 
+          chmod +x ./gradlew 
       - name: Build APK
         script: |
           ./gradlew assembleDebug
