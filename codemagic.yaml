@@ -2,7 +2,7 @@ workflows:
   build_and_deploy:
     name: Build Android App
     scripts:
-      - name: Grant execute permission to gradlew
+      - name: Fornecer permissão para o gradlew
         script: |
           chmod +x ./gradlew 
       - name: Build APK
@@ -11,6 +11,11 @@ workflows:
       - name: Build AAB
         script: |
           ./gradlew bundleRelease
+      - name: Rename APK and AAB
+        script: |
+          VERSION_NAME=$(grep "versionName" app/build.gradle | awk '{print $2}' | tr -d '\"')
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/NextAFVAndroid_${VERSION_NAME}.apk
+          mv app/build/outputs/bundle/release/app-release.aab app/build/outputs/bundle/release/NextAFVAndroid_${VERSION_NAME}.aab
     artifacts:
-      - app/build/outputs/apk/debug/*.
-      - app/build/outputs/bundle/release/*.aab
+      - app/build/outputs/apk/debug/NextAFVAndroid_*.apk
+      - app/build/outputs/bundle/release/NextAFVAndroid_*.aab
