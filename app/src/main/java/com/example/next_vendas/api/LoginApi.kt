@@ -53,6 +53,8 @@ class LoginApi(
 
                     } else {
                         iOnEnviarServidor.erro("Ocorreu um erro ao tentar-se realizar login.")
+
+                        Log.e("resp_erro", response.code().toString())
                     }
 
                 }

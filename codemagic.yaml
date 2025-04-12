@@ -24,6 +24,12 @@ workflows:
           VERSION_NAME=$(grep "versionName" app/build.gradle | awk '{print $2}' | tr -d '\"')
           mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/NextAFVAndroid_${VERSION_NAME}.apk
           mv app/build/outputs/bundle/release/app-release.aab app/build/outputs/bundle/release/NextAFVAndroid_${VERSION_NAME}.aab
+      - publishing:
+        email:
+          recipients:
+            - gabriel996567521@gmail.com
+        scripts:
+          - echo 'Post-publish script'
     artifacts:
       - app/build/outputs/apk/debug/NextAFVAndroid_*.apk
       - app/build/outputs/bundle/release/NextAFVAndroid_*.aab
